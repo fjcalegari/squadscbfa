@@ -32,7 +32,6 @@ android {
             minifyEnabled false
             debuggable true
             useProguard false
-            applicationIdSuffix '.debug'
         }
         release {
             minifyEnabled false
@@ -79,6 +78,11 @@ dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
     implementation "androidx.core:core-ktx:$coreKtxVersion"
+
+    //Firebase
+    implementation "com.google.firebase:firebase-core:$firebaseCoreVersion"
+    implementation "com.google.firebase:firebase-database:$firebaseDatabaseVersion"
+    implementation "com.google.firebase:firebase-auth:$firebaseAuthVersion"
 
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
 
@@ -146,3 +150,4 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
 }
+apply plugin: 'com.google.gms.google-services'

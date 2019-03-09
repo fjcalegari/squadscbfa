@@ -5,6 +5,11 @@ ext {
     compileSdkVersion = 28
     buildToolsVersion = '28.0.3'
 
+    //Firebase
+    firebaseCoreVersion = '16.0.7'
+    firebaseDatabaseVersion = '16.1.0'
+    firebaseAuthVersion = '16.1.0'
+
     //Core KTX
     coreKtxVersion = '1.1.0-alpha04'
 
@@ -83,6 +88,7 @@ ext {
 buildscript {
     ext.kotlinVersion = '1.3.21'
     ext.gradlePluginVersion = '3.3.2'
+    ext.googleServicesVersion = '4.2.0'
     repositories {
         google()
         jcenter()
@@ -91,6 +97,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$gradlePluginVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "com.google.gms:google-services:$googleServicesVersion"
     }
 }
 
