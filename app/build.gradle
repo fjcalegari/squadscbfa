@@ -1,34 +1,130 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         applicationId "com.calestu.squadscbfa"
-        minSdkVersion 17
-        targetSdkVersion 28
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary true
+    }
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            debuggable true
+            useProguard false
+            applicationIdSuffix '.debug'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "default"
+
+    // If you need to add more flavors, consider using flavor dimensions.
+    productFlavors {
+        dev {
+            dimension "default"
+            minSdkVersion 21
+        }
+        prod {
+            dimension "default"
+        }
+    }
+
+    // Remove mockRelease as it's not needed.
+    android.variantFilter { variant ->
+        if (variant.buildType.name == 'release'
+                && variant.flavors[0].name == 'dev') {
+            variant.ignore = true
         }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
-    implementation 'androidx.core:core-ktx:1.1.0-alpha04'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+
+    implementation "androidx.core:core-ktx:$coreKtxVersion"
+
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+
+    kapt "com.android.databinding:compiler:$databindingCompilerVersion"
+
+    implementation "androidx.annotation:annotation:$annotationVersion"
+    implementation "androidx.legacy:legacy-support-v4:$legacySupportVersion"
+    implementation "androidx.legacy:legacy-support-core-utils:$legacySupportVersion"
+
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
+    implementation "androidx.viewpager2:viewpager2:$viewpager2Version"
+    implementation "androidx.recyclerview:recyclerview:$recyclerviewVersion"
+    implementation "androidx.cardview:cardview:$cardviewVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
+
+    implementation "androidx.lifecycle:lifecycle-runtime:$archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$archLifecycleVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$archLifecycleVersion"
+
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-rxjava2:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+
+    implementation "android.arch.work:work-runtime-ktx:$archWorkVersion"
+    implementation "android.arch.work:work-rxjava2:$archWorkVersion"
+    androidTestImplementation "android.arch.work:work-testing:$archWorkVersion"
+
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+
+    //okhttp3
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    // RxJava/Android
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlinVersion"
+
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideCompilerVersion"
+
+    //GSON
+    implementation "com.google.code.gson:gson:$gsonVersion"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$timberVersion"
+
+    // Stetho
+    implementation "com.facebook.stetho:stetho:$stethoVersion"
+    implementation "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
+
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
 }
