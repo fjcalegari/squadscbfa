@@ -12,28 +12,50 @@
 
         <variable
                 name="viewmodel"
-                type="com.calestu.squadscbfa.ui.module.main.MainViewModel" />
-
-        <variable
-                name="actions"
-                type="com.calestu.squadscbfa.ui.module.main.MainActionsListener" />
+                type="com.calestu.squadscbfa.ui.base.activity.MainViewModel" />
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/root"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".MainActivity">
+            android:layout_height="match_parent">
 
-        <TextView
+        <fragment
+                android:id="@+id/navHostFragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/nav_main" />
+
+        <include
+                android:id="@+id/loadingView"
+                layout="@layout/loading_view"
+                android:visibility="@{viewmodel.dataLoading ? View.VISIBLE : View.GONE, default=visible}"
+                />
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+                android:id="@+id/bottomAppBar"
+                style="@style/Widget.MaterialComponents.BottomAppBar"
+                android:visibility="@{viewmodel.dataLoading ? View.GONE : View.VISIBLE, default=gone}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                app:backgroundTint="@color/white"
+                app:fabAlignmentMode="center"
+                app:hideOnScroll="true"
+                app:navigationIcon="@drawable/icon_menu" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                style="@style/Widget.MaterialComponents.FloatingActionButton"
+                android:visibility="@{viewmodel.dataLoading ? View.GONE : View.VISIBLE, default=gone}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hello World!"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:src="@drawable/icon_add"
+                app:layout_anchor="@id/bottomAppBar" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

@@ -6,10 +6,11 @@ import androidx.annotation.StringRes
 import com.calestu.squadscbfa.util.SingleLiveEvent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import timber.log.Timber
 
 abstract class BaseViewModel : ViewModel() {
 
-    private val compositeDisposable = CompositeDisposable()
+    var compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     val snackbarMessage = SingleLiveEvent<Int>()
 
@@ -24,7 +25,8 @@ abstract class BaseViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        compositeDisposable.dispose()
+        dispose()
+        Timber.d("onCleared: ")
     }
 
     protected abstract fun onFirsTimeUiCreate(bundle:Bundle?)
@@ -33,6 +35,17 @@ abstract class BaseViewModel : ViewModel() {
         snackbarMessage.value = message
     }
 
-    fun addDisposable(disposable: Disposable) = compositeDisposable.add(disposable)
+    fun addDisposable(disposable: Disposable) {
+        if (compositeDisposable == null) {
+            compositeDisposable = CompositeDisposable()
+        }
+        compositeDisposable.add(disposable)
+    }
+
+    fun dispose() {
+        compositeDisposable.dispose()
+        compositeDisposable = CompositeDisposable()
+    }
+
 
 }

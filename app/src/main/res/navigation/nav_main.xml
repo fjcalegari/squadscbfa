@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_main"
+            app:startDestination="@+id/placeholderFragment">
+
+    <fragment
+            android:id="@+id/placeholderFragment"
+            android:name="com.calestu.squadscbfa.ui.base.fragment.PlaceholderFragment"
+            android:label="PlaceholderFragment">
+        <action
+                android:id="@+id/action_placeholderFragment_to_listFragment"
+                app:destination="@id/homeFragment" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/homeFragment"
+            android:name="com.calestu.squadscbfa.ui.module.home.HomeFragment"
+            android:label="HomeFrag"
+            tools:layout="@layout/fragment_home"
+            >
+
+    </fragment>
+
+</navigation>

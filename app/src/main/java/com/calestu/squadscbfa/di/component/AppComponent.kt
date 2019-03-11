@@ -2,8 +2,7 @@ package com.calestu.squadscbfa.di.component
 
 import android.app.Application
 import com.calestu.squadscbfa.BaseApp
-import com.calestu.squadscbfa.di.module.AppModule
-import com.calestu.squadscbfa.di.module.BuildersModule
+import com.calestu.squadscbfa.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -14,7 +13,11 @@ import javax.inject.Singleton
     modules = [
         AndroidInjectionModule::class,
         AppModule::class,
-        BuildersModule::class
+        LocalModule::class,
+        NetworkModule::class,
+        RepositoryModule::class,
+        UseCaseModule::class,
+        MainActivityModule::class
     ]
 )
 interface AppComponent {

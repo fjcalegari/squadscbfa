@@ -1,12 +1,12 @@
 package com.calestu.squadscbfa.ui.base.fragment
 
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import androidx.databinding.ViewDataBinding
 import android.os.Bundle
 import android.view.View
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.calestu.squadscbfa.di.builder.Injectable
-import com.calestu.squadscbfa.ui.base.activity.BaseActivity
+import com.calestu.squadscbfa.ui.base.activity.MainActivity
 import com.calestu.squadscbfa.ui.base.viewmodel.BaseViewModel
 import javax.inject.Inject
 
@@ -28,7 +28,7 @@ abstract class BaseViewModelFragment<B: ViewDataBinding, VM: BaseViewModel>: Bas
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if (activity !is BaseActivity) {
+        if (activity !is MainActivity) {
             throw IllegalStateException("All fragment's container must extend BaseActivity")
         }
     }

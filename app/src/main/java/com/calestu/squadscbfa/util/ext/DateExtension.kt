@@ -9,6 +9,10 @@ fun Date.dateNow(): Date {
     return calendar().time
 }
 
+fun Date.dateTimeNow(): Long {
+    return calendar().time.time
+}
+
 fun Date.calendar(): Calendar {
     return Calendar.getInstance()
 }

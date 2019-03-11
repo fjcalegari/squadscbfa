@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Squad</string>
+
+    <!-- Menu Main -->
+    <string name="menu_teams">Teams</string>
+
 </resources>
