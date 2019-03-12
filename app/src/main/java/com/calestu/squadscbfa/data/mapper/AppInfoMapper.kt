@@ -8,7 +8,6 @@ import timber.log.Timber
 import java.util.*
 
 fun DataSnapshot.toAppInfoModel() : AppInfoModel {
-    Timber.d("toAppInfoModel: $this")
     if (exists()) {
         return getValue(AppInfoModel::class.java) ?: AppInfoModel()
     }
@@ -17,8 +16,8 @@ fun DataSnapshot.toAppInfoModel() : AppInfoModel {
 
 fun AppInfoModel.toEntity() = AppInfoEntity (
     entryid = entryid,
+    firstOpenTime = firstOpenTime,
     appVersion = app,
-    firstOpenTime = (if(firstOpen){Date().dateTimeNow()} else {firstOpenTime}),
     playersVersion = players,
     coachesVersion = coaches
 )
@@ -38,7 +37,7 @@ fun mergeResults(remote: AppInfoModel, local: AppInfoModel) : AppInfoModel {
     Timber.d("mergeResults.local: $local")
     return if (!local.emptyResult) {
         Timber.d("mergeResults: Result")
-        AppInfoModel(
+        local.copy(
             app = remote.app,
             players = remote.players,
             coaches = remote.coaches,
@@ -48,6 +47,8 @@ fun mergeResults(remote: AppInfoModel, local: AppInfoModel) : AppInfoModel {
     } else {
         Timber.d("mergeResults: emptyResult")
         AppInfoModel(
+            entryid = UUID.randomUUID().toString(),
+            firstOpenTime = Date().dateTimeNow(),
             app = remote.app,
             players = remote.players,
             coaches = remote.coaches,

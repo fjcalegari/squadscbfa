@@ -1,9 +1,6 @@
 package com.calestu.squadscbfa.di.module
 
-import com.calestu.squadscbfa.data.repository.AppInfoRepository
-import com.calestu.squadscbfa.data.repository.AppInfoRepositoryImpl
-import com.calestu.squadscbfa.data.repository.ClubRepository
-import com.calestu.squadscbfa.data.repository.ClubRepositoryImpl
+import com.calestu.squadscbfa.data.repository.*
 import com.calestu.squadscbfa.data.source.local.LocalSource
 import com.calestu.squadscbfa.data.source.remote.RemoteSource
 import dagger.Module
@@ -23,6 +20,12 @@ class RepositoryModule {
     @Provides
     fun provideClubRepository(localSource: LocalSource, remoteSource: RemoteSource): ClubRepository {
         return ClubRepositoryImpl(localSource,remoteSource)
+    }
+
+    @Singleton
+    @Provides
+    fun providePlayerRepository(localSource: LocalSource, remoteSource: RemoteSource): PlayerRepository {
+        return PlayerRepositoryImpl(localSource,remoteSource)
     }
 
 

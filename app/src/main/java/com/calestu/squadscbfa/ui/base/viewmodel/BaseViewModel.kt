@@ -10,7 +10,7 @@ import timber.log.Timber
 
 abstract class BaseViewModel : ViewModel() {
 
-    var compositeDisposable: CompositeDisposable = CompositeDisposable()
+    val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     val snackbarMessage = SingleLiveEvent<Int>()
 
@@ -25,7 +25,7 @@ abstract class BaseViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        dispose()
+        compositeDisposable.clear()
         Timber.d("onCleared: ")
     }
 
@@ -34,18 +34,5 @@ abstract class BaseViewModel : ViewModel() {
     fun showSnackbarMessage(@StringRes message: Int) {
         snackbarMessage.value = message
     }
-
-    fun addDisposable(disposable: Disposable) {
-        if (compositeDisposable == null) {
-            compositeDisposable = CompositeDisposable()
-        }
-        compositeDisposable.add(disposable)
-    }
-
-    fun dispose() {
-        compositeDisposable.dispose()
-        compositeDisposable = CompositeDisposable()
-    }
-
 
 }

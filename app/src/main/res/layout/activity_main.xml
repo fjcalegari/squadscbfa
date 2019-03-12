@@ -10,6 +10,8 @@
 
         <import type="android.view.View"/>
 
+        <import type="com.calestu.squadscbfa.ui.base.Status" />
+
         <variable
                 name="viewmodel"
                 type="com.calestu.squadscbfa.ui.base.activity.MainViewModel" />
@@ -32,13 +34,15 @@
         <include
                 android:id="@+id/loadingView"
                 layout="@layout/loading_view"
-                android:visibility="@{viewmodel.dataLoading ? View.VISIBLE : View.GONE, default=visible}"
+                android:visibility="@{viewmodel.viewStateLiveData.status == Status.LOADING ? View.VISIBLE : View.GONE, default=gone}"
+                tools:visibility="gone"
                 />
 
         <com.google.android.material.bottomappbar.BottomAppBar
                 android:id="@+id/bottomAppBar"
                 style="@style/Widget.MaterialComponents.BottomAppBar"
-                android:visibility="@{viewmodel.dataLoading ? View.GONE : View.VISIBLE, default=gone}"
+                android:visibility="@{viewmodel.viewStateLiveData.status == Status.LOADING ? View.GONE : View.VISIBLE, default=visible}"
+                tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -50,7 +54,8 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab"
                 style="@style/Widget.MaterialComponents.FloatingActionButton"
-                android:visibility="@{viewmodel.dataLoading ? View.GONE : View.VISIBLE, default=gone}"
+                android:visibility="@{viewmodel.viewStateLiveData.status == Status.LOADING ? View.GONE : View.VISIBLE, default=visible}"
+                tools:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/icon_add"

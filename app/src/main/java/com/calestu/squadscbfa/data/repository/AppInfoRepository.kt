@@ -12,6 +12,7 @@ interface AppInfoRepository {
     fun getLocalAppInfoToEmpty(): Single<AppInfoModel>
     fun getLocalCountAppInfo(): Single<Int>
     fun insertAppInfo(appInfoEntity: AppInfoEntity) : Completable
+    fun updateAppInfo(appInfoEntity: AppInfoEntity) : Completable
 
     fun getRemoteAppInfo(): Single<AppInfoModel>
 

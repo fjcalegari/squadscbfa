@@ -38,6 +38,10 @@ class AppInfoRepositoryImpl @Inject constructor(
         return localSource.insertAppInfo(appInfoEntity)
     }
 
+    override fun updateAppInfo(appInfoEntity: AppInfoEntity): Completable {
+        return localSource.updateAppInfo(appInfoEntity)
+    }
+
     override fun getLocalCountAppInfo(): Single<Int> {
         return localSource.getCountAppInfo()
     }

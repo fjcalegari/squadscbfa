@@ -4,6 +4,7 @@ import com.calestu.squadscbfa.data.executor.BaseSchedulerProvider
 import com.calestu.squadscbfa.data.executor.SchedulerProvider
 import com.calestu.squadscbfa.data.repository.AppInfoRepository
 import com.calestu.squadscbfa.data.repository.ClubRepository
+import com.calestu.squadscbfa.data.repository.PlayerRepository
 import com.calestu.squadscbfa.data.usecase.SyncUseCase
 import dagger.Module
 import dagger.Provides
@@ -22,8 +23,9 @@ class UseCaseModule {
     @Provides
     fun provideSyncUseCase(appInfoRepository: AppInfoRepository,
                            clubRepository: ClubRepository,
+                           playerRepository: PlayerRepository,
                            schedulerProvider: BaseSchedulerProvider): SyncUseCase {
-        return SyncUseCase(appInfoRepository, clubRepository, schedulerProvider)
+        return SyncUseCase(appInfoRepository, clubRepository, playerRepository, schedulerProvider)
     }
 
 }

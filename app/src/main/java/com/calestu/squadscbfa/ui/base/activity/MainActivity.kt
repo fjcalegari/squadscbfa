@@ -13,6 +13,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import com.calestu.squadscbfa.R
 import com.calestu.squadscbfa.databinding.ActivityMainBinding
+import com.calestu.squadscbfa.ui.base.Resource
+import com.calestu.squadscbfa.ui.base.Status
+import com.calestu.squadscbfa.util.ext.watch
 import com.google.android.material.bottomappbar.BottomAppBar
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -27,12 +30,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: MainViewModel
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Timber.d("onCreate: ")
         setTheme(R.style.AppTheme_Main)
         super.onCreate(savedInstanceState)
 
@@ -51,7 +53,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             viewmodel = viewModel
         }
 
-//        startSyncWorkManager()
+        viewModel.viewStateLiveData.watch(this@MainActivity, this::showState)
 
         setSupportActionBar(binding.bottomAppBar)
         Navigation.findNavController(
@@ -77,29 +79,26 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     }
 
-    private fun showHome() {
-        Navigation.findNavController(this, R.id.navHostFragment).navigate(R.id.homeFragment)
+    private fun showState(state: Resource<Boolean>) {
+        when(state.status) {
+            Status.SUCCESS -> showHome()
+            Status.LOADING -> showLoading()
+            Status.ERROR -> showError(state.message)
+        }
     }
 
-//    private fun startSyncWorkManager() {
-//        Timber.d("startSyncWorkManager: ")
-//        val syncWork = OneTimeWorkRequest
-//            .Builder(SyncWorker::class.java)
-//            .build()
-//
-//        WorkManager.getInstance()
-//            .enqueue(syncWork)
-//
-//        WorkManager.getInstance().getWorkInfoByIdLiveData(syncWork.id).watch(this@MainActivity) {
-//            it?.let {workInfo ->
-//                if (workInfo.state.isFinished) {
-//                    showHome()
-//                    viewModel.destroyDataLoading()
-//                    binding.loadingView.gifLoading.cancelAnimation()
-//                }
-//            }
-//        }
-//    }
+    private fun showLoading() {
+        Timber.d("showLoading: ")
+    }
+
+    private fun showError(errorMessage: String?) {
+        Timber.d("showError: $errorMessage")
+    }
+
+    private fun showHome() {
+        Timber.d("showHome: ")
+        Navigation.findNavController(this, R.id.navHostFragment).navigate(R.id.homeFragment)
+    }
 
 //    private fun setFabAlignment(alignment: Int, @DrawableRes drawable: Int) {
 //        binding.bottomAppBar.fabAlignmentMode = alignment

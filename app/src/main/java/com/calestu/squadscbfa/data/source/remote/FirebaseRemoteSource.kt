@@ -8,4 +8,8 @@ abstract class FirebaseRemoteSource {
 
     fun versionChild() = firebaseDatabase.reference.child("version")
 
+    fun playersChild() = firebaseDatabase.reference.child("players")
+
+    fun coachChild() = firebaseDatabase.reference.child("coach")
+
 }

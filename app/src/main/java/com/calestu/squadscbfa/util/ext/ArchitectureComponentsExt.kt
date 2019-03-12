@@ -1,10 +1,6 @@
 package com.calestu.squadscbfa.util.ext
 
 import androidx.lifecycle.*
-import com.calestu.squadscbfa.ui.base.State
-import io.reactivex.Flowable
-import org.reactivestreams.Publisher
-import timber.log.Timber
 
 inline fun <T> LiveData<T>.watch(owner: LifecycleOwner, crossinline observer: (T) -> Unit) {
     this.observe(owner, Observer { observer(it) })
@@ -32,16 +28,3 @@ fun <T> LiveData<T>.getDistinct(): LiveData<T> {
     })
     return distinctLiveData
 }
-
-fun <T> Publisher<T>.toLiveData() = LiveDataReactiveStreams.fromPublisher(this) as LiveData<T>
-
-fun <T> Flowable<T>.toState(): Flowable<State<T>> {
-    return compose { item ->
-        item
-            .map { State.success(it) }
-            .startWith(State.loading())
-            .onErrorReturn { e -> Timber.e(e); State.error(e.message ?: "Unknown Error", e) }
-    }
-}
-
-fun defaultErrorHandler(): (Throwable) -> Unit = { e -> Timber.e(e) }

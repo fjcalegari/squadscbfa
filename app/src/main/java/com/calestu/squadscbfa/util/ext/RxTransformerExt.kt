@@ -1,20 +1,33 @@
 package com.calestu.squadscbfa.util.ext
 
 import com.calestu.squadscbfa.data.executor.BaseSchedulerProvider
+import com.calestu.squadscbfa.ui.base.Resource
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+
+fun <T> Single<T>.toState(): Single<Resource<T>> {
+    return compose { item ->
+        item
+            .map {
+                Resource.success(it)
+            }
+            .doOnError {
+                Resource.error(it.localizedMessage, null)
+            }
+    }
+}
 
 fun <T> singleForUI(schedulerProvider: BaseSchedulerProvider): SingleTransformer<T, T> {
     return SingleTransformer {  it.subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())}
 }
 
 fun <T> singleIO(schedulerProvider: BaseSchedulerProvider): SingleTransformer<T, T> {
-    return SingleTransformer {  it.subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())}
+    return SingleTransformer {  it.subscribeOn(schedulerProvider.io())}
 }
 
 fun completableIO(schedulerProvider: BaseSchedulerProvider): CompletableTransformer {
-    return CompletableTransformer {  it.subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())}
+    return CompletableTransformer {  it.subscribeOn(schedulerProvider.io())}
 }
 
 fun completableForUI(schedulerProvider: BaseSchedulerProvider): CompletableTransformer {

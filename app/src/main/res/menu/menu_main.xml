@@ -5,7 +5,7 @@
     <item
         android:title="@string/menu_teams"
         android:id="@+id/action_teams"
-        android:icon="@drawable/ic_pets_black_24dp"
+        android:icon="@drawable/ic_corinthians"
         android:orderInCategory="100"
         app:showAsAction="always" />
 
