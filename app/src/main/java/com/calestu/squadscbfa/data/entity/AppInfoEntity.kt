@@ -17,6 +17,12 @@ data class AppInfoEntity(
     @ColumnInfo(name = "app_version")
     var appVersion: Int,
 
+    @ColumnInfo(name = "round")
+    var round: Int,
+
+    @ColumnInfo(name = "forceup")
+    var forceup: Boolean,
+
     @ColumnInfo(name = "players_version")
     var playersVersion: Int,
 

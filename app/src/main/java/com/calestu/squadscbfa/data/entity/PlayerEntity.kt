@@ -8,15 +8,18 @@ import androidx.room.PrimaryKey
 data class PlayerEntity(
 
     @PrimaryKey @ColumnInfo(name = "entryid")
-    var entryid: Int,
+    val entryid: Int,
 
     @ColumnInfo(name = "club")
-    var club: Int,
+    val club: Int,
 
     @ColumnInfo(name = "name")
-    var name: String,
+    val name: String,
 
     @ColumnInfo(name = "pos")
-    var pos: String
+    val pos: Int,
+
+    @ColumnInfo(name = "active")
+    val active: Boolean = false
 
 )

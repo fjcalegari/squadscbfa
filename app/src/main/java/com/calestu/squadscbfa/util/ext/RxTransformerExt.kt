@@ -5,8 +5,10 @@ import com.calestu.squadscbfa.ui.base.Resource
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 fun <T> Single<T>.toState(): Single<Resource<T>> {
+    Timber.d("toState: ")
     return compose { item ->
         item
             .map {

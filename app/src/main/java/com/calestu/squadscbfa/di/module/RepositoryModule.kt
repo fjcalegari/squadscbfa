@@ -28,5 +28,10 @@ class RepositoryModule {
         return PlayerRepositoryImpl(localSource,remoteSource)
     }
 
+    @Singleton
+    @Provides
+    fun provideCoachRepository(localSource: LocalSource, remoteSource: RemoteSource): CoachRepository {
+        return CoachRepositoryImpl(localSource,remoteSource)
+    }
 
 }

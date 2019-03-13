@@ -12,7 +12,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    syncUseCase: SyncUseCase
+    private val syncUseCase: SyncUseCase
 
 ) : BaseViewModel() {
 
@@ -24,8 +24,16 @@ class MainViewModel @Inject constructor(
     var viewStateLiveData: LiveData<Resource<Boolean>> = _viewStateLiveData
 
     init {
-        Timber.d("init")
+//        Timber.d("init")
 
+//        syncUseCase.syncApp()
+//            .toState()
+//            .subscribe(this::setViewState)
+//            .addTo(compositeDisposable)
+    }
+
+    fun initapp() {
+        Timber.d("initapp: ")
         syncUseCase.syncApp()
             .toState()
             .subscribe(this::setViewState)
@@ -33,12 +41,14 @@ class MainViewModel @Inject constructor(
     }
 
     private fun setViewState(res : Resource<Boolean>?, throwable: Throwable?) {
-        res?.let {
-            _viewStateLiveData.value = it
-        }
-        throwable?.let {
-            _viewStateLiveData.value = Resource.error(it.localizedMessage, null)
-        }
+        Timber.d("setViewState: ")
+//        res?.let {
+//            _viewStateLiveData.value = it
+//        }
+//        throwable?.let {
+//            it.printStackTrace()
+//            _viewStateLiveData.value = Resource.error(it.localizedMessage, null)
+//        }
 
     }
 

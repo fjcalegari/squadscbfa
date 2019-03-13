@@ -73,13 +73,23 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         binding.fab.setOnClickListener {
             when (binding.bottomAppBar.fabAlignmentMode) {
                 BottomAppBar.FAB_ALIGNMENT_MODE_END -> onBackPressed()
-//                BottomAppBar.FAB_ALIGNMENT_MODE_CENTER -> showEntriesAddBottomDialog(true)
+                BottomAppBar.FAB_ALIGNMENT_MODE_CENTER -> showSquadAdd()
             }
         }
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.initapp()
+    }
+
+    private fun showSquadAdd() {
+        Navigation.findNavController(this, R.id.navHostFragment).navigate(R.id.squadAddFragment)
+    }
+
     private fun showState(state: Resource<Boolean>) {
+        Timber.d("showState: ")
         when(state.status) {
             Status.SUCCESS -> showHome()
             Status.LOADING -> showLoading()

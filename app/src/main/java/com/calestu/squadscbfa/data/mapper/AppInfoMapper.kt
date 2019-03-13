@@ -18,6 +18,8 @@ fun AppInfoModel.toEntity() = AppInfoEntity (
     entryid = entryid,
     firstOpenTime = firstOpenTime,
     appVersion = app,
+    forceup = (forceup==1),
+    round = round,
     playersVersion = players,
     coachesVersion = coaches
 )
@@ -27,6 +29,8 @@ fun AppInfoEntity.fromEntity() : AppInfoModel {
       entryid = entryid,
       firstOpenTime = firstOpenTime,
       app = appVersion,
+      forceup = if(forceup){1}else{0},
+      round = round,
       players = playersVersion,
       coaches = coachesVersion
   )
@@ -39,8 +43,10 @@ fun mergeResults(remote: AppInfoModel, local: AppInfoModel) : AppInfoModel {
         Timber.d("mergeResults: Result")
         local.copy(
             app = remote.app,
+            forceup = remote.forceup,
             players = remote.players,
             coaches = remote.coaches,
+            round = remote.round,
             syncPlayers = (remote.players > local.players),
             syncCoaches = (remote.coaches > local.coaches)
         )
@@ -50,6 +56,8 @@ fun mergeResults(remote: AppInfoModel, local: AppInfoModel) : AppInfoModel {
             entryid = UUID.randomUUID().toString(),
             firstOpenTime = Date().dateTimeNow(),
             app = remote.app,
+            forceup = remote.forceup,
+            round = remote.round,
             players = remote.players,
             coaches = remote.coaches,
             firstOpen = true,

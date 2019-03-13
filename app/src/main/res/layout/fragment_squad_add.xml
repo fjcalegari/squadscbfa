@@ -9,7 +9,7 @@
 
         <variable
                 name="viewmodel"
-                type="com.calestu.squadscbfa.ui.module.home.HomeViewModel" />
+                type="com.calestu.squadscbfa.ui.module.squad.add.SquadAddViewModel" />
 
     </data>
 
@@ -24,7 +24,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-                    android:text="Squads"
+                    android:text="Criar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

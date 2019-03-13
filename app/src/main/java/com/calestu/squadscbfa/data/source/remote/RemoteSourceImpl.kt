@@ -2,6 +2,7 @@ package com.calestu.squadscbfa.data.source.remote
 
 import com.calestu.squadscbfa.data.entity.ClubEntity
 import com.calestu.squadscbfa.data.mapper.toAppInfoModel
+import com.calestu.squadscbfa.data.mapper.toListCoachModel
 import com.calestu.squadscbfa.data.mapper.toListPlayerModel
 import com.calestu.squadscbfa.data.model.AppInfoModel
 import com.calestu.squadscbfa.data.model.CoachModel
@@ -31,7 +32,7 @@ class RemoteSourceImpl @Inject constructor(
 
     override fun getCoaches(): Single<List<CoachModel>> {
         Timber.d("getCoaches: ")
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return coachChild().observeSingleValueEvent().map { it.toListCoachModel() }
     }
 
 }

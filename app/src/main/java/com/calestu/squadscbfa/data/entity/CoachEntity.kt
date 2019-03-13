@@ -14,6 +14,9 @@ data class CoachEntity(
     var club: Int,
 
     @ColumnInfo(name = "name")
-    var name: String
+    var name: String,
+
+    @ColumnInfo(name = "active")
+    val active: Boolean = false
 
 )
