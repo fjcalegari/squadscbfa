@@ -16,7 +16,6 @@ class ClubRepositoryImpl @Inject constructor(
     private val remoteSource: RemoteSource
 ) : ClubRepository {
 
-
     override fun insertLocalClubs(): Completable {
         return localSource.insertClubs(ClubType.values().map { it.toEntity() })
     }

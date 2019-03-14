@@ -8,12 +8,11 @@ import com.calestu.squadscbfa.data.repository.AppInfoRepository
 import com.calestu.squadscbfa.data.repository.ClubRepository
 import com.calestu.squadscbfa.data.repository.CoachRepository
 import com.calestu.squadscbfa.data.repository.PlayerRepository
-import com.calestu.squadscbfa.util.ext.singleForUI
-import com.calestu.squadscbfa.util.ext.singleIO
 import io.reactivex.Single
+import io.reactivex.SingleSource
+import io.reactivex.SingleTransformer
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function4
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,18 +26,18 @@ class SyncUseCase @Inject constructor(
 ) {
 
     fun syncApp(): Single<Boolean> {
-        Timber.d("syncApp: ")
-        return playerRepository.fetchFromRemote()
-            .compose(singleIO(schedulerProvider))
+        return syncAppInfo()
+            .subscribeOn(schedulerProvider.diskIO())
+            .compose(syncAllData())
     }
-//    fun syncApp(): Single<Boolean> {
-//        return syncAppInfo()
-//            .flatMap {
-////                syncAllData(it).compose(singleIO(schedulerProvider))
-//                syncAllData(it)
-//            }
-//            .compose(singleForUI(schedulerProvider))
-//    }
+
+    private fun syncAllData() = object : SingleTransformer<AppInfoModel, Boolean> {
+        override fun apply(upstream: Single<AppInfoModel>): SingleSource<Boolean> {
+            return upstream.flatMap {
+                syncAllData(it)
+            }
+        }
+    }
 
     private fun syncAppInfo() : Single<AppInfoModel> {
         return Single.zip(
@@ -51,34 +50,18 @@ class SyncUseCase @Inject constructor(
     }
 
     private fun syncAllData(appInfoModel: AppInfoModel): Single<Boolean> {
-        Timber.d("syncAllData: $appInfoModel")
-        return syncPlayers(appInfoModel)
-//        Single.zip(
-//            syncClubs(appInfoModel),
-//            syncPlayers(appInfoModel),
-//            syncCoaches(appInfoModel),
-//            syncAppInfo(appInfoModel),
-//            Function4{ clubs, players, coaches, appinfo ->
-//                true
-//            }
-//        )
+        return Single.zip(
+            syncClubs(appInfoModel),
+            syncPlayers(appInfoModel),
+            syncCoaches(appInfoModel),
+            saveAppInfo(appInfoModel),
+            Function4{ clubs, players, coaches, appinfo ->
+                true
+            }
+        )
     }
 
-//    private fun syncAllData(appInfoModel: AppInfoModel): Single<Boolean> {
-//        Timber.d("syncAllData: $appInfoModel")
-//        return Single.zip(
-//            syncClubs(appInfoModel),
-//            syncPlayers(appInfoModel),
-//            syncCoaches(appInfoModel),
-//            syncAppInfo(appInfoModel),
-//            Function4{ clubs, players, coaches, appinfo ->
-//                true
-//            }
-//        )
-//    }
-
     private fun syncPlayers(appInfoModel: AppInfoModel): Single<Boolean> {
-        appInfoModel.syncPlayers = true
         return if (appInfoModel.syncPlayers) {
             playerRepository.fetchFromRemote()
         } else {
@@ -87,9 +70,8 @@ class SyncUseCase @Inject constructor(
     }
 
     private fun syncCoaches(appInfoModel: AppInfoModel): Single<Boolean> {
-        appInfoModel.syncCoaches = true
         return if (appInfoModel.syncCoaches) {
-            coachRepository.getRemoteCoaches().map { true }
+            coachRepository.fetchFromRemote().map { true }
         } else {
             Single.just(true)
         }
@@ -103,7 +85,7 @@ class SyncUseCase @Inject constructor(
         }
     }
 
-    private fun syncAppInfo(appInfoModel: AppInfoModel): Single<Boolean> {
+    private fun saveAppInfo(appInfoModel: AppInfoModel): Single<Boolean> {
         return if (appInfoModel.firstOpen) {
             appInfoRepository.insertAppInfo(appInfoModel.toEntity()).toSingleDefault(true)
         } else {

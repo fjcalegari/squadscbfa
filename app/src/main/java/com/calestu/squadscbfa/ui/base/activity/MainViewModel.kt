@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.calestu.squadscbfa.data.usecase.SyncUseCase
 import com.calestu.squadscbfa.ui.base.Resource
 import com.calestu.squadscbfa.ui.base.viewmodel.BaseViewModel
+import com.calestu.squadscbfa.util.ext.log
 import com.calestu.squadscbfa.util.ext.toState
 import io.reactivex.rxkotlin.addTo
 import timber.log.Timber
@@ -41,14 +42,14 @@ class MainViewModel @Inject constructor(
     }
 
     private fun setViewState(res : Resource<Boolean>?, throwable: Throwable?) {
-        Timber.d("setViewState: ")
-//        res?.let {
-//            _viewStateLiveData.value = it
-//        }
-//        throwable?.let {
-//            it.printStackTrace()
-//            _viewStateLiveData.value = Resource.error(it.localizedMessage, null)
-//        }
+        Timber.d("setViewState.Thread.name: ${Thread.currentThread().name}")
+        res?.let {
+            _viewStateLiveData.value = it
+        }
+        throwable?.let {
+            it.printStackTrace()
+            _viewStateLiveData.value = Resource.error(it.localizedMessage, null)
+        }
 
     }
 

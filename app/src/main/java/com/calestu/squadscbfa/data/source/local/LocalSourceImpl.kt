@@ -27,12 +27,14 @@ class LocalSourceImpl(private val localDatabase: LocalDatabase) :
     }
 
     override fun insertAppInfo(appInfoEntity: AppInfoEntity): Completable {
+        Timber.d("insertAppInfo.Thread.name: ${Thread.currentThread().name}")
         return localDatabase
             .localDao()
             .insertAppInfo(appInfoEntity)
     }
 
     override fun updateAppInfo(appInfoEntity: AppInfoEntity): Completable {
+        Timber.d("updateAppInfo.Thread.name: ${Thread.currentThread().name}")
         return localDatabase
             .localDao()
             .updateAppInfo(appInfoEntity)
@@ -46,6 +48,7 @@ class LocalSourceImpl(private val localDatabase: LocalDatabase) :
     }
 
     override fun insertClubs(clubs: List<ClubEntity>): Completable {
+        Timber.d("insertClubs.Thread.name: ${Thread.currentThread().name}")
         return localDatabase
             .localDao()
             .insertClubs(clubs)
@@ -53,6 +56,7 @@ class LocalSourceImpl(private val localDatabase: LocalDatabase) :
 
     override fun insertPlayers(players: List<PlayerEntity>): Completable {
         Timber.d("insertPlayers: $players")
+        Timber.d("insertPlayers.Thread.name: ${Thread.currentThread().name}")
         return localDatabase
             .localDao()
             .insertPlayers(players)
@@ -60,6 +64,7 @@ class LocalSourceImpl(private val localDatabase: LocalDatabase) :
 
     override fun insertCoaches(coaches: List<CoachEntity>): Completable {
         Timber.d("insertCoaches: $coaches")
+        Timber.d("insertCoaches.Thread.name: ${Thread.currentThread().name}")
         return localDatabase
             .localDao()
             .insertCoaches(coaches)

@@ -1,5 +1,7 @@
 package com.calestu.squadscbfa.di.module
 
+import com.calestu.squadscbfa.data.executor.BaseSchedulerProvider
+import com.calestu.squadscbfa.data.source.remote.FirebaseRemoteSource
 import com.calestu.squadscbfa.data.source.remote.RemoteSource
 import com.calestu.squadscbfa.data.source.remote.RemoteSourceImpl
 import com.google.gson.Gson
@@ -18,8 +20,14 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideNetworkSource(): RemoteSource {
-        return RemoteSourceImpl()
+    fun provideFirebaseRemoteSource(schedulerProvider: BaseSchedulerProvider): FirebaseRemoteSource {
+        return FirebaseRemoteSource(schedulerProvider)
+    }
+
+    @Singleton
+    @Provides
+    fun provideNetworkSource(firebaseRemoteSource: FirebaseRemoteSource): RemoteSource {
+        return RemoteSourceImpl(firebaseRemoteSource)
     }
 
     @Provides

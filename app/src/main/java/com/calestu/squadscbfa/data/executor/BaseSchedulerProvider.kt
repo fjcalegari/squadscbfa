@@ -11,4 +11,8 @@ interface BaseSchedulerProvider {
     fun io(): Scheduler
 
     fun ui(): Scheduler
+
+    fun networkIO(): Scheduler
+
+    fun diskIO(): Scheduler
 }

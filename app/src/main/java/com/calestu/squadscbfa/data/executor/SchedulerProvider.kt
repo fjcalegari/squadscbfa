@@ -3,6 +3,7 @@ package com.calestu.squadscbfa.data.executor
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.Executors
 import javax.inject.Singleton
 
 @Singleton
@@ -22,5 +23,13 @@ class SchedulerProvider : BaseSchedulerProvider {
 
     override fun ui(): Scheduler {
         return AndroidSchedulers.mainThread()
+    }
+
+    override fun networkIO(): Scheduler {
+        return Schedulers.from(Executors.newFixedThreadPool(3))
+    }
+
+    override fun diskIO(): Scheduler {
+        return Schedulers.from(Executors.newSingleThreadExecutor())
     }
 }

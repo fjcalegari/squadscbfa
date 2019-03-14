@@ -6,16 +6,9 @@ import com.google.firebase.database.DataSnapshot
 
 fun DataSnapshot.toListCoachModel() : List<CoachModel> {
     if (exists()) {
-        children.mapNotNull {it.toCoacheModel()}
+        return children.mapNotNull {it.getValue(CoachModel::class.java)}
     }
     return emptyList()
-}
-
-fun DataSnapshot.toCoacheModel() : CoachModel {
-    if (exists()) {
-        return getValue(CoachModel::class.java) ?: CoachModel()
-    }
-    return CoachModel()
 }
 
 fun CoachModel.toEntity() = CoachEntity (

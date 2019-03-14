@@ -6,16 +6,9 @@ import com.google.firebase.database.DataSnapshot
 
 fun DataSnapshot.toListPlayerModel() : List<PlayerModel> {
     if (exists()) {
-        children.mapNotNull {it.toPlayerModel()}
+        return children.mapNotNull {it.getValue(PlayerModel::class.java)}
     }
     return emptyList()
-}
-
-fun DataSnapshot.toPlayerModel() : PlayerModel {
-    if (exists()) {
-        return getValue(PlayerModel::class.java) ?: PlayerModel()
-    }
-    return PlayerModel()
 }
 
 fun PlayerModel.toEntity() = PlayerEntity (
