@@ -5,17 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.calestu.squadscbfa.data.entity.AppInfoEntity
-import com.calestu.squadscbfa.data.entity.ClubEntity
-import com.calestu.squadscbfa.data.entity.CoachEntity
-import com.calestu.squadscbfa.data.entity.PlayerEntity
-import timber.log.Timber
+import com.calestu.squadscbfa.data.entity.*
 
 @Database(entities = [
     AppInfoEntity::class,
     ClubEntity::class,
     PlayerEntity::class,
-    CoachEntity::class
+    CoachEntity::class,
+    CurrentSquadEntity::class
 ], version = 1, exportSchema = false)
 @TypeConverters(LocalDbConverter::class)
 abstract class LocalDatabase : RoomDatabase() {
@@ -33,7 +30,6 @@ abstract class LocalDatabase : RoomDatabase() {
             }
 
         private fun buildDatabase(context: Context) : LocalDatabase {
-            Timber.d("buildDatabase: ")
             return Room.databaseBuilder(context.applicationContext,
                 LocalDatabase::class.java, "sqdcbfaapp.db")
                 .build()

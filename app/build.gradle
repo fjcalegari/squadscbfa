@@ -111,7 +111,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime:$archLifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$archLifecycleVersion"
-    implementation "android.arch.lifecycle:reactivestreams:$archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:$archLifecycleVersion"
     kapt "androidx.lifecycle:lifecycle-compiler:$archLifecycleVersion"
 
     implementation "androidx.room:room-runtime:$roomVersion"

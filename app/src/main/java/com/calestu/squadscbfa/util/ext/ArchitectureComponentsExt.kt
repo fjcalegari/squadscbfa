@@ -1,6 +1,7 @@
 package com.calestu.squadscbfa.util.ext
 
 import androidx.lifecycle.*
+import org.reactivestreams.Publisher
 
 inline fun <T> LiveData<T>.watch(owner: LifecycleOwner, crossinline observer: (T) -> Unit) {
     this.observe(owner, Observer { observer(it) })
@@ -28,3 +29,5 @@ fun <T> LiveData<T>.getDistinct(): LiveData<T> {
     })
     return distinctLiveData
 }
+
+fun <T> Publisher<T>.toLiveData() = LiveDataReactiveStreams.fromPublisher(this) as LiveData<T>

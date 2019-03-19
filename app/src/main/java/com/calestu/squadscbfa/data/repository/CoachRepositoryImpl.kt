@@ -13,7 +13,6 @@ import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class CoachRepositoryImpl @Inject constructor(
     private val localSource: LocalSource,
     private val remoteSource: RemoteSource

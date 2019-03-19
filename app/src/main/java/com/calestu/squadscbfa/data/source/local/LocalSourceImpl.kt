@@ -1,9 +1,8 @@
 package com.calestu.squadscbfa.data.source.local
 
-import com.calestu.squadscbfa.data.entity.AppInfoEntity
-import com.calestu.squadscbfa.data.entity.ClubEntity
-import com.calestu.squadscbfa.data.entity.CoachEntity
-import com.calestu.squadscbfa.data.entity.PlayerEntity
+import androidx.lifecycle.LiveData
+import com.calestu.squadscbfa.data.entity.*
+import com.calestu.squadscbfa.ui.module.squad.add.model.SquadAddModel
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -13,6 +12,41 @@ import javax.inject.Singleton
 @Singleton
 class LocalSourceImpl(private val localDatabase: LocalDatabase) :
     LocalSource {
+
+    override fun getCurrentSquad(): LiveData<CurrentSquadEntity> {
+        Timber.d("getCurrentSquad.Thread.name: ${Thread.currentThread().name}")
+        return localDatabase
+            .localDao()
+            .getCurrentSquad()
+    }
+
+    override fun getLocalCurrentSquad(): Single<CurrentSquadEntity> {
+        Timber.d("getCurrentSquad.Thread.name: ${Thread.currentThread().name}")
+        return localDatabase
+            .localDao()
+            .getLocalCurrentSquad()
+    }
+
+    override fun getCountCurrentSquad(): Single<Int> {
+        Timber.d("getCountCurrentSquad.Thread.name: ${Thread.currentThread().name}")
+        return localDatabase
+            .localDao()
+            .getCountCurrentSquad()
+    }
+
+    override fun insertCurrentSquad(currentSquadEntity: CurrentSquadEntity): Completable {
+        Timber.d("insertCurrentSquad.Thread.name: ${Thread.currentThread().name}")
+        return localDatabase
+            .localDao()
+            .insertCurrentSquad(currentSquadEntity)
+    }
+
+    override fun updateCurrentSquad(currentSquadEntity: CurrentSquadEntity): Completable {
+        Timber.d("updateCurrentSquad.Thread.name: ${Thread.currentThread().name}")
+        return localDatabase
+            .localDao()
+            .updateCurrentSquad(currentSquadEntity)
+    }
 
     override fun getAppInfo(): Single<AppInfoEntity> {
         return localDatabase

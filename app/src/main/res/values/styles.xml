@@ -1,17 +1,46 @@
 <resources>
 
-  <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-    <!-- Customize your theme here. -->
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
-  </style>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
-  <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
-  <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light"/>
+
+    <style name="IconButton" parent="Widget.MaterialComponents.Button.OutlinedButton.Icon">
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="iconPadding">0dp</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="iconSize">@dimen/spacingMedium</item>
+        <item name="android:layout_height">@dimen/spacingLarge</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="iconTint">@color/colorAccent</item>
+    </style>
+
+    <style name="SelectedButton">
+        <item name="android:background">?actionBarItemBackground</item>
+        <item name="android:layout_width">@dimen/spacingExtra</item>
+        <item name="android:layout_height">@dimen/spacingExtra</item>
+        <item name="android:padding">@dimen/spacingMedium</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/background_white_round_top_corners</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
 
 </resources>

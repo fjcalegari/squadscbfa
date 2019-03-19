@@ -16,6 +16,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
+import androidx.annotation.DrawableRes
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -53,10 +55,14 @@ inline fun SpannableStringBuilder.withSpan(vararg spans: Any, action: SpannableS
     return this
 }
 
-/**
- * Extension method to provide simpler access to {@link ContextCompat#getColor(int)}.
- */
-fun Context.getColorCompat(color: Int) = ContextCompat.getColor(this, color)
+
+fun Context.color(colorRes: Int) = ContextCompat.getColor(this, colorRes)
+
+fun Context.drawable(@DrawableRes drawableRes: Int) = ContextCompat.getDrawable(this, drawableRes)
+
+fun TextView.color(colorRes: Int) {
+    setTextColor(context.color(colorRes))
+}
 
 /**
  * Extension method to provide simpler access to {@link View#getResources()#getString(int)}.

@@ -18,7 +18,7 @@
 
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/root"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -27,40 +27,56 @@
                 android:id="@+id/navHostFragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 app:defaultNavHost="true"
-                app:navGraph="@navigation/nav_main" />
+                app:navGraph="@navigation/nav_main"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/coordinatorLayout"/>
 
         <include
                 android:id="@+id/loadingView"
                 layout="@layout/loading_view"
                 android:visibility="@{viewmodel.viewStateLiveData.status == Status.LOADING ? View.VISIBLE : View.GONE, default=gone}"
                 tools:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 />
 
-        <com.google.android.material.bottomappbar.BottomAppBar
-                android:id="@+id/bottomAppBar"
-                style="@style/Widget.MaterialComponents.BottomAppBar"
-                android:visibility="@{viewmodel.viewStateLiveData.status == Status.LOADING ? View.GONE : View.VISIBLE, default=visible}"
-                tools:visibility="visible"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/coordinatorLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                app:backgroundTint="@color/white"
-                app:fabAlignmentMode="center"
-                app:hideOnScroll="true"
-                app:navigationIcon="@drawable/icon_menu" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                style="@style/Widget.MaterialComponents.FloatingActionButton"
-                android:visibility="@{viewmodel.viewStateLiveData.status == Status.LOADING ? View.GONE : View.VISIBLE, default=visible}"
-                tools:visibility="visible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_add"
-                app:layout_anchor="@id/bottomAppBar" />
+            <com.google.android.material.bottomappbar.BottomAppBar
+                    android:id="@+id/bottomAppBar"
+                    android:visibility="@{viewmodel.viewStateLiveData.status == Status.LOADING ? View.GONE : View.VISIBLE, default=visible}"
+                    tools:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    app:backgroundTint="@color/white"
+                    app:fabAlignmentMode="center"
+                    app:navigationIcon="@drawable/icon_menu"/>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:visibility="@{viewmodel.viewStateLiveData.status == Status.LOADING ? View.GONE : View.VISIBLE, default=visible}"
+                    tools:visibility="visible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_add"
+                    app:layout_anchor="@id/bottomAppBar"/>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

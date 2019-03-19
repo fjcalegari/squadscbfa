@@ -1,12 +1,10 @@
 package com.calestu.squadscbfa.data.source.local
 
-import com.calestu.squadscbfa.data.entity.AppInfoEntity
-import com.calestu.squadscbfa.data.entity.ClubEntity
-import com.calestu.squadscbfa.data.entity.CoachEntity
-import com.calestu.squadscbfa.data.entity.PlayerEntity
+import androidx.lifecycle.LiveData
+import com.calestu.squadscbfa.data.entity.*
+import com.calestu.squadscbfa.ui.module.squad.add.model.SquadAddModel
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Maybe
 import io.reactivex.Single
 
 interface LocalSource {
@@ -26,5 +24,12 @@ interface LocalSource {
 
     //COACH
     fun insertCoaches(coaches : List<CoachEntity>) : Completable
+
+    // CURRENT SQUAD
+    fun getCurrentSquad(): LiveData<CurrentSquadEntity>
+    fun getLocalCurrentSquad(): Single<CurrentSquadEntity>
+    fun getCountCurrentSquad(): Single<Int>
+    fun insertCurrentSquad(currentSquadEntity: CurrentSquadEntity) : Completable
+    fun updateCurrentSquad(currentSquadEntity: CurrentSquadEntity) : Completable
 
 }

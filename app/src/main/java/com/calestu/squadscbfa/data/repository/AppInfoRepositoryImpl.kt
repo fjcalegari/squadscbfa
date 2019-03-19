@@ -11,7 +11,6 @@ import io.reactivex.SingleTransformer
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class AppInfoRepositoryImpl @Inject constructor(
     private val localSource: LocalSource,
     private val remoteSource: RemoteSource

@@ -16,7 +16,6 @@ import io.reactivex.functions.Function4
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class SyncUseCase @Inject constructor(
     private val appInfoRepository: AppInfoRepository,
     private val clubRepository: ClubRepository,

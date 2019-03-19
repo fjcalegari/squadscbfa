@@ -1,35 +1,282 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         >
 
     <data>
 
         <import type="android.view.View"/>
+        <import type="androidx.lifecycle.LiveData"/>
+        <import type="com.calestu.squadscbfa.ui.module.squad.add.model.SquadAddModel"/>
+
+        <import type="com.calestu.squadscbfa.data.model.PlayerSquadModel"/>
+
+        <variable
+                name="playersquadmodel"
+                type="PlayerSquadModel" />
 
         <variable
                 name="viewmodel"
                 type="com.calestu.squadscbfa.ui.module.squad.add.SquadAddViewModel" />
 
+        <variable
+                name="squad"
+                type="LiveData&lt;SquadAddModel>" />
+
     </data>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-        >
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
 
-            <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnSquads"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-                    android:text="Criar"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+        <androidx.constraintlayout.widget.Guideline
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/guidelineVertical"
+                app:layout_constraintGuide_percent="0.5"
+                android:orientation="vertical"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.Guideline
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/guidelineHorizontal"
+                app:layout_constraintGuide_percent="0.5"
+                android:orientation="horizontal"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineGol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.95"
+                />
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineZag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.80"
+                />
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineLat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.60"
+                />
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineMei"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.40"
+                />
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineAta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.20"
+                />
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFormation"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{squad.formation.title}"
+                android:onClick="@{() -> viewmodel.clickedFormationButton(squad.formation.index)}"
+                tools:text="4-4-2"
+                app:icon="@drawable/ic_arrow_down"
+                app:iconGravity="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"/>
+
+        <include
+                android:id="@+id/playerAta3"
+                layout="@layout/player_squad"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.playerAta3}"
+                android:visibility="@{squad.formation.ata == 3 ? View.VISIBLE : View.GONE, default=visible}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toTopOf="@id/guidelineAta"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineAta"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/playerAta2"/>
+
+        <include
+                android:id="@+id/playerAta2"
+                layout="@layout/player_squad"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.playerAta2}"
+                android:visibility="@{squad.formation.ata > 1 ? View.VISIBLE : View.GONE, default=visible}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toTopOf="@id/guidelineAta"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineAta"
+                app:layout_constraintStart_toEndOf="@+id/playerAta3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/playerAta1"/>
+
+        <include
+                android:id="@+id/playerAta1"
+                layout="@layout/player_squad"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.playerAta1}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toTopOf="@id/guidelineAta"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineAta"
+                app:layout_constraintStart_toEndOf="@+id/playerAta2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        <include
+                android:id="@+id/playerMei5"
+                layout="@layout/player_squad"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.playerMei5}"
+                android:visibility="@{squad.formation.mei == 5 ? View.VISIBLE : View.GONE, default=visible}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toTopOf="@id/guidelineMei"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineMei"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/playerMei4"
+                />
+
+        <include
+                android:id="@+id/playerMei4"
+                layout="@layout/player_squad"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.playerMei4}"
+                android:visibility="@{squad.formation.mei > 3 ? View.VISIBLE : View.GONE, default=visible}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toTopOf="@id/guidelineMei"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineMei"
+                app:layout_constraintStart_toEndOf="@+id/playerMei5"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/playerMei3"/>
+
+        <include
+                android:id="@+id/playerMei3"
+                layout="@layout/player_squad"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.playerMei3}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toTopOf="@id/guidelineMei"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineMei"
+                app:layout_constraintStart_toEndOf="@+id/playerMei4"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/playerMei2"/>
+
+        <include
+                android:id="@+id/playerMei2"
+                layout="@layout/player_squad"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.playerMei2}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toTopOf="@id/guidelineMei"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineMei"
+                app:layout_constraintStart_toEndOf="@+id/playerMei3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/playerMei1"/>
+
+        <include
+                android:id="@+id/playerMei1"
+                layout="@layout/player_squad"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.playerMei1}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toTopOf="@id/guidelineMei"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineMei"
+                app:layout_constraintStart_toEndOf="@+id/playerMei2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        <include
+                android:id="@+id/playerLat2"
+                layout="@layout/player_squad"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.playerLat2}"
+                android:visibility="@{squad.formation.lat == 2 ? View.VISIBLE : View.GONE, default=visible}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toTopOf="@id/guidelineLat"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineLat"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                />
+
+        <include
+                android:id="@+id/playerLat1"
+                layout="@layout/player_squad"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.playerLat1}"
+                android:visibility="@{squad.formation.lat == 2 ? View.VISIBLE : View.GONE, default=visible}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toTopOf="@id/guidelineLat"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineLat"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                />
+
+        <include
+                android:id="@+id/playerZag3"
+                layout="@layout/player_squad"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.playerZag3}"
+                android:visibility="@{squad.formation.zag == 3 ? View.VISIBLE : View.GONE, default=visible}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toTopOf="@id/guidelineZag"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineZag"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/playerZag2"
+                />
+
+        <include
+                android:id="@+id/playerZag2"
+                layout="@layout/player_squad"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.playerZag2}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toTopOf="@id/guidelineZag"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineZag"
+                app:layout_constraintStart_toEndOf="@+id/playerZag3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/playerZag1"/>
+
+        <include
+                android:id="@+id/playerZag1"
+                layout="@layout/player_squad"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.playerZag1}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toTopOf="@id/guidelineZag"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineZag"
+                app:layout_constraintStart_toEndOf="@+id/playerZag2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        <include
+                android:id="@+id/playerGol"
+                layout="@layout/player_squad"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.playerGol}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guidelineGol"
+                app:layout_constraintBottom_toBottomOf="@id/guidelineGol"
+                />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

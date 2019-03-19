@@ -1,10 +1,9 @@
 package com.calestu.squadscbfa.data.source.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.calestu.squadscbfa.data.entity.AppInfoEntity
-import com.calestu.squadscbfa.data.entity.ClubEntity
-import com.calestu.squadscbfa.data.entity.CoachEntity
-import com.calestu.squadscbfa.data.entity.PlayerEntity
+import com.calestu.squadscbfa.data.entity.*
+import com.calestu.squadscbfa.ui.module.squad.add.model.SquadAddModel
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -39,5 +38,21 @@ interface LocalDao {
     //COACH
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCoaches(coaches : List<CoachEntity>) : Completable
+
+    //CURRENT SQUAD
+    @Query("SELECT * FROM currentsquad LIMIT 1")
+    fun getCurrentSquad(): LiveData<CurrentSquadEntity>
+
+    @Query("SELECT * FROM currentsquad LIMIT 1")
+    fun getLocalCurrentSquad(): Single<CurrentSquadEntity>
+
+    @Query("SELECT COUNT(*) FROM currentsquad")
+    fun getCountCurrentSquad(): Single<Int>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCurrentSquad(currentSquadEntity: CurrentSquadEntity) : Completable
+
+    @Update
+    fun updateCurrentSquad(currentSquadEntity: CurrentSquadEntity) : Completable
 
 }

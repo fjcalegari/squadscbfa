@@ -19,6 +19,22 @@ fun <T> Single<T>.toState(): Single<Resource<T>> {
     }
 }
 
+fun <T> Flowable<T>.toState(): Flowable<Resource<T>> {
+    return compose { item ->
+        item
+            .map {
+                Resource.success(it)
+            }
+            .doOnError {
+                Resource.error(it.localizedMessage, null)
+            }
+    }
+}
+
+fun <T> flowableForUI(schedulerProvider: BaseSchedulerProvider): FlowableTransformer<T, T> {
+    return FlowableTransformer {  it.subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())}
+}
+
 fun <T> singleForUI(schedulerProvider: BaseSchedulerProvider): SingleTransformer<T, T> {
     return SingleTransformer {  it.subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())}
 }

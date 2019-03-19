@@ -10,7 +10,6 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class ClubRepositoryImpl @Inject constructor(
     private val localSource: LocalSource,
     private val remoteSource: RemoteSource
