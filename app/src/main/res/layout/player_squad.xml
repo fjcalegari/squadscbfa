@@ -19,6 +19,10 @@
                 name="playermodel"
                 type="PlayerModel" />
 
+        <variable
+                name="callback"
+                type="com.calestu.squadscbfa.ui.module.squad.add.SquadPlayerUserActionsListener" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,6 +37,7 @@
                 android:text="@{playersquadmodel.labelPos}"
                 tools:text="POS"
                 android:textColor="@color/white"
+                android:onClick="@{() -> callback.clickedPlayer(playersquadmodel)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

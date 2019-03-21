@@ -16,7 +16,7 @@ class SquadAddFragment : BaseViewModelFragment<FragmentSquadAddBinding, SquadAdd
 
         with(binding) {
             viewmodel = viewModel
-            squad = viewModel.currentSquadAddModel
+            squad = viewModel.currentSquadLiveData
         }
 
         with(viewModel) {

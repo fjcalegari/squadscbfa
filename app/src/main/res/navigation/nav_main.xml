@@ -31,6 +31,18 @@
             android:name="com.calestu.squadscbfa.ui.module.squad.add.SquadAddFragment"
             android:label="SquadAddFragment"
             tools:layout="@layout/fragment_squad_add">
+
+        <action
+                android:id="@+id/fragmentAddSquadToPlayer"
+                app:destination="@id/playerFragment" />
+
+    </fragment>
+
+    <fragment
+            android:id="@+id/playerFragment"
+            android:name="com.calestu.squadscbfa.ui.module.player.PlayerFragment"
+            android:label="PlayerFragment"
+            tools:layout="@layout/fragment_players">
     </fragment>
 
 </navigation>

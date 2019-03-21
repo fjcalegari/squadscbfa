@@ -89,6 +89,7 @@ dependencies {
     implementation "com.google.firebase:firebase-core:$firebaseCoreVersion"
     implementation "com.google.firebase:firebase-database:$firebaseDatabaseVersion"
     implementation "com.google.firebase:firebase-auth:$firebaseAuthVersion"
+    implementation "com.google.firebase:firebase-storage:$firebaseStorageVersion"
 
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
 

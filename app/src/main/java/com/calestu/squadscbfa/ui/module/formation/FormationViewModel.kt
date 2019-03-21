@@ -33,7 +33,7 @@ class FormationViewModel @Inject constructor(
         Timber.d("formationSelected: $formationType")
 
         currentSquadRepository.getLocalCurrentSquad().
-            map { t ->  t.copy(formation = formationType.index)}
+            map { t ->  t.copy(formation = formationType)}
             .flatMap {
                 currentSquadRepository.updateCurrentSquad(it).subscribeOn(Schedulers.io()).subscribe().addTo(compositeDisposable)
                 Single.just(it)

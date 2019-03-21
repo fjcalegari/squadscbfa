@@ -8,6 +8,11 @@
 
         <import type="android.view.View"/>
         <import type="androidx.lifecycle.LiveData"/>
+
+        <import type="com.calestu.squadscbfa.ui.base.Status" />
+
+        <import type="com.calestu.squadscbfa.ui.base.Resource" />
+
         <import type="com.calestu.squadscbfa.ui.module.squad.add.model.SquadAddModel"/>
 
         <import type="com.calestu.squadscbfa.data.model.PlayerSquadModel"/>
@@ -22,7 +27,15 @@
 
         <variable
                 name="squad"
-                type="LiveData&lt;SquadAddModel>" />
+                type="LiveData&lt;Resource&lt;SquadAddModel>>" />
+
+        <variable
+                name="retryCallback"
+                type="com.calestu.squadscbfa.ui.base.RetryCallback" />
+
+        <variable
+                name="playerCallback"
+                type="com.calestu.squadscbfa.ui.module.squad.add.SquadPlayerUserActionsListener" />
 
     </data>
 
@@ -90,8 +103,8 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{squad.formation.title}"
-                android:onClick="@{() -> viewmodel.clickedFormationButton(squad.formation.index)}"
+                android:text="@{squad.data.formation.title}"
+                android:onClick="@{() -> viewmodel.clickedFormationButton(squad.data.formation.index)}"
                 tools:text="4-4-2"
                 app:icon="@drawable/ic_arrow_down"
                 app:iconGravity="textStart"
@@ -103,8 +116,8 @@
         <include
                 android:id="@+id/playerAta3"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) squad.playerAta3}"
-                android:visibility="@{squad.formation.ata == 3 ? View.VISIBLE : View.GONE, default=visible}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerAta3}"
+                android:visibility="@{squad.data.formation.ata == 3 ? View.VISIBLE : View.GONE, default=visible}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintTop_toTopOf="@id/guidelineAta"
@@ -116,8 +129,8 @@
         <include
                 android:id="@+id/playerAta2"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) squad.playerAta2}"
-                android:visibility="@{squad.formation.ata > 1 ? View.VISIBLE : View.GONE, default=visible}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerAta2}"
+                android:visibility="@{squad.data.formation.ata > 1 ? View.VISIBLE : View.GONE, default=visible}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintTop_toTopOf="@id/guidelineAta"
@@ -129,7 +142,7 @@
         <include
                 android:id="@+id/playerAta1"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) squad.playerAta1}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerAta1}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintTop_toTopOf="@id/guidelineAta"
@@ -141,8 +154,8 @@
         <include
                 android:id="@+id/playerMei5"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) squad.playerMei5}"
-                android:visibility="@{squad.formation.mei == 5 ? View.VISIBLE : View.GONE, default=visible}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerMei5}"
+                android:visibility="@{squad.data.formation.mei == 5 ? View.VISIBLE : View.GONE, default=visible}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintTop_toTopOf="@id/guidelineMei"
@@ -155,8 +168,8 @@
         <include
                 android:id="@+id/playerMei4"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) squad.playerMei4}"
-                android:visibility="@{squad.formation.mei > 3 ? View.VISIBLE : View.GONE, default=visible}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerMei4}"
+                android:visibility="@{squad.data.formation.mei > 3 ? View.VISIBLE : View.GONE, default=visible}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintTop_toTopOf="@id/guidelineMei"
@@ -168,7 +181,7 @@
         <include
                 android:id="@+id/playerMei3"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) squad.playerMei3}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerMei3}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintTop_toTopOf="@id/guidelineMei"
@@ -180,7 +193,7 @@
         <include
                 android:id="@+id/playerMei2"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) squad.playerMei2}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerMei2}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintTop_toTopOf="@id/guidelineMei"
@@ -192,7 +205,7 @@
         <include
                 android:id="@+id/playerMei1"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) squad.playerMei1}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerMei1}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintTop_toTopOf="@id/guidelineMei"
@@ -204,8 +217,8 @@
         <include
                 android:id="@+id/playerLat1"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) squad.playerLat1}"
-                android:visibility="@{squad.formation.lat == 2 ? View.VISIBLE : View.GONE, default=visible}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerLat1}"
+                android:visibility="@{squad.data.formation.lat == 2 ? View.VISIBLE : View.GONE, default=visible}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintTop_toTopOf="@id/guidelineZag"
@@ -218,7 +231,7 @@
         <include
                 android:id="@+id/playerZag1"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) squad.playerZag1}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerZag1}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintTop_toTopOf="@id/guidelineZag"
@@ -230,7 +243,7 @@
         <include
                 android:id="@+id/playerZag2"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) squad.playerZag2}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerZag2}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintTop_toTopOf="@id/guidelineZag"
@@ -242,8 +255,8 @@
         <include
                 android:id="@+id/playerZag3"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) squad.playerZag3}"
-                android:visibility="@{squad.formation.zag == 3 ? View.VISIBLE : View.GONE, default=visible}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerZag3}"
+                android:visibility="@{squad.data.formation.zag == 3 ? View.VISIBLE : View.GONE, default=visible}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintTop_toTopOf="@id/guidelineZag"
@@ -255,8 +268,8 @@
         <include
                 android:id="@+id/playerLat2"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) squad.playerLat2}"
-                android:visibility="@{squad.formation.lat == 2 ? View.VISIBLE : View.GONE, default=visible}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerLat2}"
+                android:visibility="@{squad.data.formation.lat == 2 ? View.VISIBLE : View.GONE, default=visible}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintTop_toTopOf="@id/guidelineZag"
@@ -268,7 +281,8 @@
         <include
                 android:id="@+id/playerGol"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) squad.playerGol}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerGol}"
+                app:callback="@{() -> viewmodel.clickedPlayer(squad.data.playerGol)}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -276,6 +290,21 @@
                 app:layout_constraintTop_toTopOf="@id/guidelineGol"
                 app:layout_constraintBottom_toBottomOf="@id/guidelineGol"
                 />
+
+        <include
+                layout="@layout/loading_state"
+                app:resource="@{(Resource) squad}"
+                app:callback="@{() -> retryCallback.retry()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

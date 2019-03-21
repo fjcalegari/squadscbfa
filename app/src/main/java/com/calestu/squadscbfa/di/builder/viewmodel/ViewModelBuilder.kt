@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.calestu.squadscbfa.ui.base.activity.MainViewModel
 import com.calestu.squadscbfa.ui.module.formation.FormationViewModel
 import com.calestu.squadscbfa.ui.module.home.HomeViewModel
+import com.calestu.squadscbfa.ui.module.player.PlayerViewModel
 import com.calestu.squadscbfa.ui.module.squad.add.SquadAddViewModel
 import dagger.Binds
 import dagger.Module
@@ -32,6 +33,11 @@ abstract class ViewModelBuilder {
     @IntoMap
     @ViewModelKey(FormationViewModel::class)
     abstract fun bindFormationViewModel(viewModel: FormationViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PlayerViewModel::class)
+    abstract fun bindPlayerViewModel(viewModel: PlayerViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory( factory: AppViewModelFactory):

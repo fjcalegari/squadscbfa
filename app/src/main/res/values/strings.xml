@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Squad</string>
 
+    <string name="retry">Retry</string>
+    <string name="unknown_error">Unknown Error</string>
+
     <!-- Menu Main -->
     <string name="menu_teams">Teams</string>
 

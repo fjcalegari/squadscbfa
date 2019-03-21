@@ -11,7 +11,14 @@ enum class PlayerPositionType(val pos: Int, val short: String, val tag: String) 
     companion object {
 
         @JvmStatic
-        fun getPlayerPosition(pos: Int) = values().single { it.pos == pos}
+        fun getPlayerPosition(pos: Int) = when(pos){
+            GOLEIRO.pos -> GOLEIRO
+            LATERAL.pos -> LATERAL
+            ZAGUEIRO.pos -> ZAGUEIRO
+            MEIA.pos -> MEIA
+            ATACANTE.pos -> ATACANTE
+            else -> GOLEIRO
+        }
 
     }
 

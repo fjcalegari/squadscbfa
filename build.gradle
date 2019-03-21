@@ -11,7 +11,8 @@ ext {
     //Firebase
     firebaseCoreVersion = '16.0.7'
     firebaseDatabaseVersion = '16.1.0'
-    firebaseAuthVersion = '16.1.0'
+    firebaseAuthVersion = '16.2.0'
+    firebaseStorageVersion = '16.1.0'
 
     //Core KTX
     coreKtxVersion = '1.1.0-alpha04'
