@@ -23,7 +23,7 @@ enum class FormationType(
 
     companion object {
 
-        fun getFormation(index: Int) = values().single() { it.index == index }
+        fun getFormation(index: Int) = values().single { it.index == index }
 
         fun getFormations(indexSelected: Int) : List<FormationType> {
             return if (indexSelected == 0) {

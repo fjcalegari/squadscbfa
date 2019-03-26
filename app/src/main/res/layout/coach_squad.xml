@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        >
+
+    <data>
+
+        <import type="com.calestu.squadscbfa.data.model.CoachSquadModel" />
+
+        <import type="com.calestu.squadscbfa.data.model.CoachModel" />
+
+        <variable
+                name="coachsquadmodel"
+                type="CoachSquadModel" />
+
+        <variable
+                name="coachmodel"
+                type="CoachModel" />
+
+        <variable
+                name="callback"
+                type="com.calestu.squadscbfa.ui.module.squad.add.SquadCoachUserActionsListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/gray_dark"
+            android:onClick="@{() -> callback.clickedCoach(coachsquadmodel)}"
+            >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{coachsquadmodel.labelPos}"
+                tools:text="TEC"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

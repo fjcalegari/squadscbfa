@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name">Squad</string>
 
+    <string name="mysquad_empty" translation_description="">empty</string>
+
     <string name="retry">Retry</string>
     <string name="unknown_error">Unknown Error</string>
 
     <!-- Menu Main -->
     <string name="menu_teams">Teams</string>
+
+    <string name="general_error_title">Ops. ocorreu um problema</string>
+    <string name="internet_connection_not_found">Não foi possível estabelecer conexão com a internet.</string>
 
 </resources>

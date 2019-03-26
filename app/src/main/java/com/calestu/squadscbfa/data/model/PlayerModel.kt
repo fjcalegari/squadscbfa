@@ -1,12 +1,11 @@
 package com.calestu.squadscbfa.data.model
 
-import com.google.firebase.database.IgnoreExtraProperties
+import com.calestu.squadscbfa.data.model.type.PlayerPositionType
 
-@IgnoreExtraProperties
 data class PlayerModel(
-    var entryid: Int = 0,
-    var club: Int = 0,
-    var name: String = "",
-    var pos: Int = 0
+    val entryid: Int,
+    val club: Int,
+    val name: String,
+    val pos: PlayerPositionType
 )
 

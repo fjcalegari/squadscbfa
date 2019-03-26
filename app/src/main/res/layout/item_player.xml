@@ -16,30 +16,91 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/default_margin"
-            android:paddingEnd="@dimen/activity_horizontal_margin">
+            app:cardBackgroundColor="@color/white"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="0dp"
+            >
 
-        <TextView
-                android:id="@+id/tvTitle"
-                style="@style/TextAppearance.MaterialComponents.Body1"
-                android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacingSmall"
-                android:maxLines="1"
-                android:text="@{player.name}"
-                android:textColor="@color/gray_dark"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="@tools:sample/lorem" />
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/default_margin"
+                android:paddingBottom="@dimen/default_margin"
+                android:paddingEnd="@dimen/activity_horizontal_margin">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                    android:id="@+id/tvLabelPos"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacingTiny"
+                    android:maxLines="1"
+                    android:text="@{player.pos.tag}"
+                    android:textColor="@color/gray_dark"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="POS" />
+
+            <ImageView
+                    android:id="@+id/iconClub"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="@dimen/spacingSmall"
+                    app:imageRes="@{player.club.icon}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvLabelPos"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:src="@drawable/ic_club_corinthians"
+                    />
+
+            <TextView
+                    android:id="@+id/tvTitle"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacingSmall"
+                    android:maxLines="1"
+                    android:text="@{player.name}"
+                    android:textColor="@color/gray_dark"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iconClub"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="@tools:sample/lorem" />
+            
+            <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                    app:icon="@drawable/ic_arrow_selected"
+                    app:iconGravity="textStart"
+                    android:visibility="@{player.inSquad ? View.GONE : View.VISIBLE, default=visible}"
+                    android:layout_marginEnd="@dimen/spacingSmall"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+            <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+                    app:icon="@drawable/ic_arrow_unselected"
+                    app:iconGravity="textStart"
+                    android:visibility="@{player.inSquad ? View.VISIBLE : View.GONE, default=gone}"
+                    android:layout_marginEnd="@dimen/spacingSmall"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>

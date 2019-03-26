@@ -1,7 +1,9 @@
 package com.calestu.squadscbfa.di.module
 
+import com.calestu.squadscbfa.data.executor.BaseSchedulerProvider
 import com.calestu.squadscbfa.data.repository.*
 import com.calestu.squadscbfa.data.source.local.LocalSource
+import com.calestu.squadscbfa.data.source.local.SquadSource
 import com.calestu.squadscbfa.data.source.remote.RemoteSource
 import dagger.Module
 import dagger.Provides
@@ -10,13 +12,20 @@ import dagger.Provides
 class RepositoryModule {
 
     @Provides
-    fun provideAppInfoRepository(localSource: LocalSource, remoteSource: RemoteSource): AppInfoRepository {
-        return AppInfoRepositoryImpl(localSource,remoteSource)
+    fun provideAppVersionRepository(
+        localSource: LocalSource,
+        remoteSource: RemoteSource,
+        schedulerProvider: BaseSchedulerProvider
+    ): AppVersionRepository {
+        return AppVersionRepositoryImpl(localSource, remoteSource, schedulerProvider)
     }
 
     @Provides
-    fun provideClubRepository(localSource: LocalSource, remoteSource: RemoteSource): ClubRepository {
-        return ClubRepositoryImpl(localSource,remoteSource)
+    fun provideSquadRepository(
+        localSource: LocalSource,
+        squadSource: SquadSource
+    ): SquadRepository {
+        return SquadRepositoryImpl(localSource, squadSource)
     }
 
     @Provides

@@ -1,6 +1,7 @@
 package com.calestu.squadscbfa.ui.module.squad.add
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.calestu.squadscbfa.R
 import com.calestu.squadscbfa.databinding.FragmentSquadAddBinding
 import com.calestu.squadscbfa.ui.base.fragment.BaseViewModelFragment
@@ -18,13 +19,23 @@ class SquadAddFragment : BaseViewModelFragment<FragmentSquadAddBinding, SquadAdd
             viewmodel = viewModel
             squad = viewModel.currentSquadLiveData
         }
-
+        
         with(viewModel) {
             onClickedFormationEvent.watch(viewLifecycleOwner) {
                 openFormation(it, FormationFlowType.SQUAD_ADD)
             }
+
+            onClickedAddPlayerEvent.watch(viewLifecycleOwner) {
+                showPlayers(it)
+            }
+
         }
 
+    }
+
+    override fun showPlayers(args: Pair<String, Int>) {
+        Timber.d("showPlayers: ")
+        findNavController().navigate(SquadAddFragmentDirections.fragmentAddSquadToPlayer(args.first, args.second))
     }
 
     override fun openFormation(indexSelected: Int, flowType: FormationFlowType) {

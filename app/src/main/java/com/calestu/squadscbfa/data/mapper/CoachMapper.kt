@@ -1,27 +1,12 @@
 package com.calestu.squadscbfa.data.mapper
 
 import com.calestu.squadscbfa.data.entity.CoachEntity
-import com.calestu.squadscbfa.data.model.CoachModel
-import com.google.firebase.database.DataSnapshot
+import com.calestu.squadscbfa.data.model.type.ClubType
+import com.calestu.squadscbfa.data.source.remote.model.CoachRemoteModel
 
-fun DataSnapshot.toListCoachModel() : List<CoachModel> {
-    if (exists()) {
-        return children.mapNotNull {it.getValue(CoachModel::class.java)}
-    }
-    return emptyList()
-}
-
-fun CoachModel.toEntity() = CoachEntity (
+fun CoachRemoteModel.toEntity() = CoachEntity(
     entryid = entryid,
-    club = club,
     name = name,
-    active = (club>0)
+    active = status == 1,
+    club = ClubType.getClub(club)
 )
-
-fun CoachEntity.fromEntity() : CoachModel {
-    return CoachModel(
-        entryid = entryid,
-        club = club,
-        name = name
-    )
-}

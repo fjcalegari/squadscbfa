@@ -5,4 +5,5 @@ import com.calestu.squadscbfa.data.model.PlayerSquadModel
 interface SquadPlayerUserActionsListener {
 
     fun clickedPlayer(player: PlayerSquadModel)
+
 }

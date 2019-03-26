@@ -6,4 +6,6 @@ interface SquadAddNavigator {
 
     fun openFormation(indexSelected : Int, flowType: FormationFlowType)
 
+    fun showPlayers(args: Pair<String, Int>)
+
 }

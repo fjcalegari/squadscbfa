@@ -28,7 +28,6 @@ class FormationAdapter (
     }
 
     fun setFormationsList(formationsList: List<FormationType>) {
-        Timber.d("setFormationsList: $formationsList")
         this.list = formationsList
         notifyDataSetChanged()
     }

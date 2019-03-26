@@ -5,6 +5,7 @@ import com.calestu.squadscbfa.ui.base.Resource
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 fun <T> Single<T>.toState(): Single<Resource<T>> {
     return compose { item ->
@@ -26,6 +27,7 @@ fun <T> Flowable<T>.toState(): Flowable<Resource<T>> {
                 Resource.success(it)
             }
             .doOnError {
+                Timber.d("toStatedoOnError: ")
                 Resource.error(it.localizedMessage, null)
             }
     }

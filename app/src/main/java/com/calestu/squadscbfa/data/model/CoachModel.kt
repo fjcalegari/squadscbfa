@@ -1,10 +1,9 @@
 package com.calestu.squadscbfa.data.model
 
-import com.google.firebase.database.IgnoreExtraProperties
+import com.calestu.squadscbfa.data.model.type.ClubType
 
-@IgnoreExtraProperties
-data class  CoachModel(
-    var entryid: Int = 0,
-    var club: Int = 0,
-    var name: String = ""
+data class CoachModel (
+    val entryid: Int,
+    val club: ClubType,
+    val name: String
 )

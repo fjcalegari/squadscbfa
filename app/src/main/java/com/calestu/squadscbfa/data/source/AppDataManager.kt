@@ -1,58 +1,65 @@
 package com.calestu.squadscbfa.data.source
 
 import android.content.Context
+import com.calestu.squadscbfa.data.model.type.FormationType
+import com.calestu.squadscbfa.data.model.type.RoundType
+import com.calestu.squadscbfa.data.source.prefs.PreferencesHelper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import durdinapps.rxfirebase2.RxFirebaseAuth
-import durdinapps.rxfirebase2.RxFirebaseStorage
 import io.reactivex.Single
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AppDataManager @Inject constructor(
     private val context: Context,
+    private val preferences: PreferencesHelper,
     private val firebaseAuth: FirebaseAuth
 ) : DataManager {
+
+    override fun getCurrentFormation(): FormationType {
+        val formationIndex = preferences.currentFormation
+        if (formationIndex == 0) {
+            saveCurrentFormation(FormationType.FORMATION_442.index)
+            return FormationType.FORMATION_442
+        }
+        return FormationType.getFormation(formationIndex)
+    }
+
+    override fun saveCurrentFormation(formationType: Int) {
+        preferences.currentFormation = formationType
+    }
+
+    override fun getCurrentRound(): RoundType {
+        val index = preferences.currentRound
+        return RoundType.getRound(index)
+    }
+
+    override fun saveCurrentRound(roundType: Int) {
+        preferences.currentRound = roundType
+    }
 
     override fun userAuthenticated(): Boolean {
         return firebaseAuth.currentUser != null
     }
 
-    override fun currentUser(): FirebaseUser? {
-        return firebaseAuth.currentUser
-    }
-
-    override fun signInAnonymously() : Single<FirebaseUser> {
-        Timber.d("signInAnonymously: ")
-        remoteCo()
+    override fun getCurrentUser(): Single<FirebaseUser> {
         return if (userAuthenticated()) {
-            Timber.d("signInAnonymously: userAuthenticated")
-            Single.just(currentUser()!!)
+            Single.just(firebaseAuth.currentUser)
         } else {
-            Timber.d("signInAnonymously: signInAnonymously")
-            RxFirebaseAuth.signInAnonymously(firebaseAuth)
-                .map { it.user }
-                .toSingle()
+            signInAnonymously()
         }
     }
 
-    fun remoteCo() {
-        Timber.d("remoteCo: ")
+    override fun signInAnonymously() : Single<FirebaseUser> {
+        return RxFirebaseAuth.signInAnonymously(firebaseAuth)
+            .map { it.user }
+            .toSingle()
+    }
 
-        val storageReference: StorageReference = FirebaseStorage.getInstance().reference.child("coaches.json")
-
-        RxFirebaseStorage.getDownloadUrl(storageReference)
-            .doOnSuccess {
-                Timber.d("remoteCo.doOnSuccess: $it")
-            }
-            .doOnComplete {
-                Timber.d("remoteCo.doOnComplete")
-            }
-            .subscribe()
+    override fun getUserUid(): String {
+        return firebaseAuth.currentUser?.uid ?: ""
     }
 
 }

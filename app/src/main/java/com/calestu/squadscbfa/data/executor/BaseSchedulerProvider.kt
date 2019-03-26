@@ -15,4 +15,5 @@ interface BaseSchedulerProvider {
     fun networkIO(): Scheduler
 
     fun diskIO(): Scheduler
+
 }

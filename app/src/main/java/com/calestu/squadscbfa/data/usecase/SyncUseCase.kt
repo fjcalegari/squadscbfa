@@ -1,94 +1,125 @@
 package com.calestu.squadscbfa.data.usecase
 
+import androidx.annotation.MainThread
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import com.calestu.squadscbfa.data.executor.BaseSchedulerProvider
-import com.calestu.squadscbfa.data.mapper.mergeResults
-import com.calestu.squadscbfa.data.mapper.toEntity
-import com.calestu.squadscbfa.data.model.AppInfoModel
-import com.calestu.squadscbfa.data.repository.AppInfoRepository
-import com.calestu.squadscbfa.data.repository.ClubRepository
+import com.calestu.squadscbfa.data.model.AppVersionResultModel
+import com.calestu.squadscbfa.data.repository.AppVersionRepository
 import com.calestu.squadscbfa.data.repository.CoachRepository
 import com.calestu.squadscbfa.data.repository.PlayerRepository
+import com.calestu.squadscbfa.data.source.DataManager
+import com.calestu.squadscbfa.ui.base.Resource
+import com.calestu.squadscbfa.util.ext.toLiveData
+import com.calestu.squadscbfa.util.ext.toState
+import com.google.firebase.auth.FirebaseUser
 import io.reactivex.Single
 import io.reactivex.SingleSource
 import io.reactivex.SingleTransformer
 import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Function4
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class SyncUseCase @Inject constructor(
-    private val appInfoRepository: AppInfoRepository,
-    private val clubRepository: ClubRepository,
+    private val dataManager: DataManager,
+    private val appVersionRepository: AppVersionRepository,
     private val playerRepository: PlayerRepository,
     private val coachRepository: CoachRepository,
     private val schedulerProvider: BaseSchedulerProvider
 ) {
 
-    fun syncApp(): Single<Boolean> {
-        return syncAppInfo()
-            .subscribeOn(schedulerProvider.diskIO())
-            .compose(syncAllData())
+    private val result = MediatorLiveData<Resource<Boolean>>()
+
+    private fun asLiveData() = result as LiveData<Resource<Boolean>>
+
+    fun sync(): LiveData<Resource<Boolean>> {
+        setValue(Resource.loading(null))
+
+//        result.addSource(dataManager.getCurrentUser()
+//            .compose(loadAppVersion())
+//            .compose(loadData())
+//            .compose(saveDataManager())
+//            .compose(saveAppVersion())
+//            .subscribeOn(schedulerProvider.networkIO())
+//            .observeOn(schedulerProvider.ui())
+//            .toFlowable()
+//            .toState()
+//            .toLiveData()) { newData ->
+//               setValue(newData)
+//            }
+
+        result.addSource(Single.just(true)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
+            .toFlowable()
+            .toState()
+            .toLiveData()) { newData ->
+                setValue(newData)
+            }
+
+        return asLiveData()
     }
 
-    private fun syncAllData() = object : SingleTransformer<AppInfoModel, Boolean> {
-        override fun apply(upstream: Single<AppInfoModel>): SingleSource<Boolean> {
+    private fun loadAppVersion() = object : SingleTransformer<FirebaseUser, AppVersionResultModel> {
+        override fun apply(upstream: Single<FirebaseUser>): SingleSource<AppVersionResultModel> {
             return upstream.flatMap {
-                syncAllData(it)
+                appVersionRepository.loadAppVersion()
             }
         }
     }
 
-    private fun syncAppInfo() : Single<AppInfoModel> {
+    private fun loadData() = object : SingleTransformer<AppVersionResultModel, AppVersionResultModel> {
+        override fun apply(upstream: Single<AppVersionResultModel>): SingleSource<AppVersionResultModel> {
+            return upstream.flatMap { version ->
+                loadAllData(version)
+            }
+        }
+    }
+
+    private fun loadAllData(appVersionResultModel: AppVersionResultModel): Single<AppVersionResultModel> {
         return Single.zip(
-            appInfoRepository.getRemoteAppInfo(),
-            appInfoRepository.getLocalAppInfoToEmpty(),
-            BiFunction { remote, local ->
-                mergeResults(remote, local)
+            syncCoaches(appVersionResultModel),
+            syncPlayers(appVersionResultModel),
+            BiFunction{ coaches, players ->
+                appVersionResultModel
             }
         )
     }
 
-    private fun syncAllData(appInfoModel: AppInfoModel): Single<Boolean> {
-        return Single.zip(
-            syncClubs(appInfoModel),
-            syncPlayers(appInfoModel),
-            syncCoaches(appInfoModel),
-            saveAppInfo(appInfoModel),
-            Function4{ clubs, players, coaches, appinfo ->
-                true
+    private fun syncCoaches(appVersionResultModel: AppVersionResultModel): Single<Boolean> {
+        return if (appVersionResultModel.syncCoach) {
+            coachRepository.loadCoaches().toSingleDefault(true)
+        } else {
+            Single.just(true)
+        }
+    }
+
+    private fun syncPlayers(appVersionResultModel: AppVersionResultModel): Single<Boolean> {
+        return playerRepository.loadPlayers(appVersionResultModel).toSingleDefault(true)
+    }
+
+    private fun saveAppVersion() = object : SingleTransformer<AppVersionResultModel, Boolean> {
+        override fun apply(upstream: Single<AppVersionResultModel>): SingleSource<Boolean> {
+            return upstream.flatMap { version ->
+                appVersionRepository.saveAppVersion(version)
+                    .toSingleDefault(true)
             }
-        )
-    }
-
-    private fun syncPlayers(appInfoModel: AppInfoModel): Single<Boolean> {
-        return if (appInfoModel.syncPlayers) {
-            playerRepository.fetchFromRemote()
-        } else {
-            Single.just(true)
         }
     }
 
-    private fun syncCoaches(appInfoModel: AppInfoModel): Single<Boolean> {
-        return if (appInfoModel.syncCoaches) {
-            coachRepository.fetchFromRemote().map { true }
-        } else {
-            Single.just(true)
+    private fun saveDataManager() = object : SingleTransformer<AppVersionResultModel, AppVersionResultModel> {
+        override fun apply(upstream: Single<AppVersionResultModel>): SingleSource<AppVersionResultModel> {
+            return upstream.flatMap { version ->
+                Single.fromCallable {
+                    dataManager.saveCurrentRound(version.appVersionRemoteModel.round)
+                }.map { return@map version }
+            }
         }
     }
 
-    private fun syncClubs(appInfoModel: AppInfoModel): Single<Boolean> {
-        return if (appInfoModel.syncClubs) {
-            clubRepository.insertLocalClubs().toSingleDefault(true)
-        } else {
-            Single.just(true)
-        }
-    }
-
-    private fun saveAppInfo(appInfoModel: AppInfoModel): Single<Boolean> {
-        return if (appInfoModel.firstOpen) {
-            appInfoRepository.insertAppInfo(appInfoModel.toEntity()).toSingleDefault(true)
-        } else {
-            appInfoRepository.updateAppInfo(appInfoModel.toEntity()).toSingleDefault(true)
+    @MainThread
+    private fun setValue(newValue: Resource<Boolean>) {
+        if (result.value != newValue) {
+            result.value = newValue
         }
     }
 

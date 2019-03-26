@@ -12,14 +12,19 @@ import java.util.*
 @Entity(tableName = "currentsquad")
 data class CurrentSquadEntity(
 
-    @PrimaryKey @ColumnInfo(name = "entryid")
+    @PrimaryKey
     val entryid: String = UUID.randomUUID().toString(),
 
     @ColumnInfo(name = "created_time")
-    var createdTime: Long = Date().dateTimeNow(),
+    val createdTime: Long = Date().dateTimeNow(),
+
+    @ColumnInfo(name = "updated_time")
+    var updatedTime: Long? = null,
+
+    var title: String,
 
     var formation: FormationType,
 
-    var round: RoundType = RoundType.ROUND_1
+    var round: RoundType
 
 )

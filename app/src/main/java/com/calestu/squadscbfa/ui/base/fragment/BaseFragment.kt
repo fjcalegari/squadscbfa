@@ -15,7 +15,7 @@ abstract class BaseFragment<B: ViewDataBinding> : Fragment() {
 
     var binding by autoCleared<B>()
 
-    private val dataBindingComponent: DataBindingComponent
+    val dataBindingComponent: DataBindingComponent
         get() = FragmentDataBindingComponent(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

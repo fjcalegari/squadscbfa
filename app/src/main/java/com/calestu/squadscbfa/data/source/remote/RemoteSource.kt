@@ -1,26 +1,21 @@
 package com.calestu.squadscbfa.data.source.remote
 
-import com.calestu.squadscbfa.data.entity.ClubEntity
-import com.calestu.squadscbfa.data.model.AppInfoModel
-import com.calestu.squadscbfa.data.model.CoachModel
-import com.calestu.squadscbfa.data.model.PlayerModel
-import com.google.firebase.database.DataSnapshot
+import com.calestu.squadscbfa.data.source.remote.model.AppVersionRemoteModel
+import com.calestu.squadscbfa.data.source.remote.model.CoachRemoteModel
+import com.calestu.squadscbfa.data.source.remote.model.PlayerRemoteModel
+import com.calestu.squadscbfa.data.source.remote.model.type.AppVersionRemoteType
 import io.reactivex.Flowable
-import io.reactivex.Maybe
 import io.reactivex.Single
 
 interface RemoteSource {
 
-    // APP INFO
-    fun getAppInfo(): Single<AppInfoModel>
+    // APP VERSION
+    fun getAppVersion(): Single<AppVersionRemoteModel>
 
-    // CLUB
-    fun getClubs(): Flowable<List<ClubEntity>>
+    // COACHES
+    fun getCoaches() : Flowable<List<CoachRemoteModel>>
 
-    // PLAYER
-    fun getPlayers(): Single<List<PlayerModel>>
-
-    // PLAYER
-    fun getCoaches(): Single<List<CoachModel>>
+    // PLAYERS
+    fun getPlayers(appVersionRemoteType: AppVersionRemoteType) : Flowable<List<PlayerRemoteModel>>
 
 }

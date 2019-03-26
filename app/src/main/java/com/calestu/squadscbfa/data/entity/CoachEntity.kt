@@ -1,22 +1,19 @@
 package com.calestu.squadscbfa.data.entity
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.calestu.squadscbfa.data.model.type.ClubType
 
 @Entity(tableName = "coach")
 data class CoachEntity(
 
-    @PrimaryKey @ColumnInfo(name = "entryid")
-    var entryid: Int,
+    @PrimaryKey
+    val entryid: Int,
 
-    @ColumnInfo(name = "club")
-    var club: Int,
+    val club: ClubType,
 
-    @ColumnInfo(name = "name")
-    var name: String,
+    val name: String,
 
-    @ColumnInfo(name = "active")
-    val active: Boolean = false
+    val active: Boolean
 
 )

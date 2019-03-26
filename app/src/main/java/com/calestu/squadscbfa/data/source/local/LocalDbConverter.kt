@@ -1,10 +1,7 @@
 package com.calestu.squadscbfa.data.source.local
 
 import androidx.room.TypeConverter
-import com.calestu.squadscbfa.data.model.type.ClubType
-import com.calestu.squadscbfa.data.model.type.FormationType
-import com.calestu.squadscbfa.data.model.type.PlayerPositionType
-import com.calestu.squadscbfa.data.model.type.RoundType
+import com.calestu.squadscbfa.data.model.type.*
 import java.util.*
 
 class LocalDbConverter {
@@ -39,6 +36,16 @@ class LocalDbConverter {
         @TypeConverter @JvmStatic
         fun toPlayerPositionType(value: Int): PlayerPositionType {
             return PlayerPositionType.getPlayerPosition(value)
+        }
+
+        @TypeConverter @JvmStatic
+        fun fromPlayerPositionFormationType(value: PlayerPositionFormationType): Int {
+            return value.index
+        }
+
+        @TypeConverter @JvmStatic
+        fun toPlayerPositionFormationType(value: Int): PlayerPositionFormationType {
+            return PlayerPositionFormationType.getPlayerPositionFormationType(value)
         }
 
         @TypeConverter @JvmStatic

@@ -17,16 +17,19 @@
 package com.calestu.squadscbfa.util.binding
 
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import javax.inject.Inject
 
 /**
  * Binding adapters that work with a fragment instance.
  */
 class FragmentBindingAdapters @Inject constructor(val fragment: Fragment) {
-    @BindingAdapter("imageUrl")
-    fun bindImage(imageView: ImageView, url: String?) {
-//        Glide.with(fragment).load(RemoteConstants.BASE_POSTER_THUMB_IMAGE_URL+url).into(imageView)
+    @BindingAdapter("imageRes")
+    fun bindImage(imageView: ImageView, @DrawableRes idRes: Int) {
+        Glide.with(fragment).load(idRes).into(imageView)
     }
 }

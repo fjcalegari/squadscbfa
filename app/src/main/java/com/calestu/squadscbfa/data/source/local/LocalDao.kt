@@ -1,9 +1,13 @@
 package com.calestu.squadscbfa.data.source.local
 
-import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.*
-import com.calestu.squadscbfa.data.entity.*
-import com.calestu.squadscbfa.ui.module.squad.add.model.SquadAddModel
+import com.calestu.squadscbfa.data.entity.AppVersionEntity
+import com.calestu.squadscbfa.data.entity.CoachEntity
+import com.calestu.squadscbfa.data.entity.CurrentSquadEntity
+import com.calestu.squadscbfa.data.entity.PlayerEntity
+import com.calestu.squadscbfa.data.model.type.PlayerPositionType
+import com.calestu.squadscbfa.ui.module.player.model.PlayerModelView
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -11,43 +15,39 @@ import io.reactivex.Single
 @Dao
 interface LocalDao {
 
-    //APP INFO
-    @Query("SELECT * FROM appinfo LIMIT 1")
-    fun getAppInfo(): Single<AppInfoEntity>
+    //APP VERSION
+    @Query("SELECT COUNT(*) FROM appversion")
+    fun getCountAppVersion(): Single<Int>
 
-    @Query("SELECT COUNT(*) FROM appinfo")
-    fun getCountAppInfo(): Single<Int>
+    @Query("SELECT * FROM appversion LIMIT 1")
+    fun getAppVersion(): Single<AppVersionEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAppInfo(appInfoEntity: AppInfoEntity) : Completable
+    fun insertAppVersion(appVersionEntity: AppVersionEntity) : Completable
 
     @Update
-    fun updateAppInfo(appInfoEntity: AppInfoEntity) : Completable
-
-    //CLUB
-    @Query("SELECT * FROM club")
-    fun getClubs(): Flowable<List<ClubEntity>>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertClubs(clubs : List<ClubEntity>) : Completable
-
-    //PLAYER
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPlayers(players : List<PlayerEntity>) : Completable
+    fun updateAppVersion(appVersionEntity: AppVersionEntity) : Completable
 
     //COACH
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCoaches(coaches : List<CoachEntity>) : Completable
+    fun saveCoach(coachEntity: CoachEntity): Completable
+
+    //PLAYER
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun savePlayer(player: PlayerEntity): Completable
+
+    @Query("SELECT * FROM player WHERE pos == :positionType ORDER BY name ASC")
+    fun getPlayers(positionType: PlayerPositionType): DataSource.Factory<Int, PlayerModelView>
 
     //CURRENT SQUAD
+    @Query("SELECT COUNT(*) FROM currentsquad")
+    fun getCountCurrentSquad(): Single<Int>
+
     @Query("SELECT * FROM currentsquad LIMIT 1")
-    fun getCurrentSquad(): LiveData<CurrentSquadEntity>
+    fun currentSquad(): Flowable<CurrentSquadEntity>
 
     @Query("SELECT * FROM currentsquad LIMIT 1")
     fun getLocalCurrentSquad(): Single<CurrentSquadEntity>
-
-    @Query("SELECT COUNT(*) FROM currentsquad")
-    fun getCountCurrentSquad(): Single<Int>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCurrentSquad(currentSquadEntity: CurrentSquadEntity) : Completable

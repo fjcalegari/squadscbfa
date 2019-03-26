@@ -1,13 +1,18 @@
 package com.calestu.squadscbfa.data.repository
 
+import androidx.paging.DataSource
 import com.calestu.squadscbfa.data.entity.PlayerEntity
-import com.calestu.squadscbfa.data.model.PlayerModel
+import com.calestu.squadscbfa.data.model.AppVersionResultModel
+import com.calestu.squadscbfa.data.model.type.PlayerPositionType
+import com.calestu.squadscbfa.ui.module.player.model.PlayerModelView
 import io.reactivex.Completable
-import io.reactivex.Single
 
 interface PlayerRepository {
 
-    fun fetchFromRemote(): Single<Boolean>
+    fun loadPlayers(appVersionResultModel: AppVersionResultModel): Completable
 
-    fun insertLocalPlayers(players: List<PlayerEntity>) : Completable
+    fun savePlayer(playerEntity: PlayerEntity): Completable
+
+    fun getPlayers(positionType: PlayerPositionType): DataSource.Factory<Int, PlayerModelView>
+
 }

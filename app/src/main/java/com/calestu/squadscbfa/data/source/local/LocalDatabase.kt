@@ -8,16 +8,18 @@ import androidx.room.TypeConverters
 import com.calestu.squadscbfa.data.entity.*
 
 @Database(entities = [
-    AppInfoEntity::class,
-    ClubEntity::class,
-    PlayerEntity::class,
+    AppVersionEntity::class,
     CoachEntity::class,
-    CurrentSquadEntity::class
+    PlayerEntity::class,
+    CurrentSquadEntity::class,
+    SquadEntity::class,
+    PlayerSquadEntity::class
 ], version = 1, exportSchema = false)
 @TypeConverters(LocalDbConverter::class)
 abstract class LocalDatabase : RoomDatabase() {
 
     abstract fun localDao(): LocalDao
+    abstract fun squadDao(): SquadDao
 
     companion object {
 

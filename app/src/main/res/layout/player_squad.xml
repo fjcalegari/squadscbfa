@@ -29,6 +29,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@color/gray_dark"
+            android:onClick="@{() -> callback.clickedPlayer(playersquadmodel)}"
             >
 
         <TextView
@@ -37,7 +38,6 @@
                 android:text="@{playersquadmodel.labelPos}"
                 tools:text="POS"
                 android:textColor="@color/white"
-                android:onClick="@{() -> callback.clickedPlayer(playersquadmodel)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

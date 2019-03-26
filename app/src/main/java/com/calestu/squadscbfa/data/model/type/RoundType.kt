@@ -44,7 +44,11 @@ enum class RoundType(val round: Int, val title: String) {
     companion object {
 
         @JvmStatic
-        fun getRound(round: Int) = values().single { it.round == round}
+        fun getRound(round: Int): RoundType {
+            return values().single {
+                it.round == round
+            }
+        }
 
     }
 

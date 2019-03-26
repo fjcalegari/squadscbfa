@@ -48,7 +48,7 @@ ext {
     viewpager2Version = '1.0.0-alpha01'
 
     // databinding:compiler
-    databindingCompilerVersion = '3.2.0-alpha10'
+    databindingCompilerVersion = '3.3.2'
 
     // Arch Lifecyle
     archLifecycleVersion = '2.0.0'

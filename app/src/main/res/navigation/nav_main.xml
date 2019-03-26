@@ -24,6 +24,17 @@
         <action
                 android:id="@+id/fragmentHomeToSquad"
                 app:destination="@id/squadAddFragment" />
+        <action
+                android:id="@+id/fragmentHomeToMySquad"
+                app:destination="@id/mySquadFragment" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/mySquadFragment"
+            android:name="com.calestu.squadscbfa.ui.module.mysquad.MySquadFragment"
+            android:label="MySquadFragment"
+            tools:layout="@layout/fragment_mysquad">
+
     </fragment>
 
     <fragment
@@ -34,7 +45,9 @@
 
         <action
                 android:id="@+id/fragmentAddSquadToPlayer"
-                app:destination="@id/playerFragment" />
+                destination="@+id/playerFragment"
+                app:destination="@id/playerFragment"
+                />
 
     </fragment>
 
@@ -43,6 +56,14 @@
             android:name="com.calestu.squadscbfa.ui.module.player.PlayerFragment"
             android:label="PlayerFragment"
             tools:layout="@layout/fragment_players">
+
+        <argument
+                android:name="currentSquadEntryid"
+                app:argType="string" />
+        <argument
+                android:name="playerPositionFormationIndex"
+                app:argType="integer" />
+
     </fragment>
 
 </navigation>

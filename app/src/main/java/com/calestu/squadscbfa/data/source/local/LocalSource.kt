@@ -1,35 +1,37 @@
 package com.calestu.squadscbfa.data.source.local
 
-import androidx.lifecycle.LiveData
-import com.calestu.squadscbfa.data.entity.*
-import com.calestu.squadscbfa.ui.module.squad.add.model.SquadAddModel
+import androidx.paging.DataSource
+import com.calestu.squadscbfa.data.entity.AppVersionEntity
+import com.calestu.squadscbfa.data.entity.CoachEntity
+import com.calestu.squadscbfa.data.entity.CurrentSquadEntity
+import com.calestu.squadscbfa.data.entity.PlayerEntity
+import com.calestu.squadscbfa.data.model.type.PlayerPositionType
+import com.calestu.squadscbfa.data.source.remote.model.AppVersionRemoteModel
+import com.calestu.squadscbfa.ui.module.player.model.PlayerModelView
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 
 interface LocalSource {
 
-    // APP INFO
-    fun getAppInfo(): Single<AppInfoEntity>
-    fun getCountAppInfo(): Single<Int>
-    fun insertAppInfo(appInfoEntity: AppInfoEntity) : Completable
-    fun updateAppInfo(appInfoEntity: AppInfoEntity) : Completable
-
-    // CLUB
-    fun getClubs(): Flowable<List<ClubEntity>>
-    fun insertClubs(clubs : List<ClubEntity>) : Completable
-
-    //PLAYER
-    fun insertPlayers(players : List<PlayerEntity>) : Completable
+    // APP VERSION
+    fun countAppVersion(): Single<Int>
+    fun getAppVersion(): Single<AppVersionEntity>
+    fun insertAppVersion(appVersionEntity: AppVersionEntity): Completable
+    fun updateAppVersion(appVersionEntity: AppVersionEntity): Completable
 
     //COACH
-    fun insertCoaches(coaches : List<CoachEntity>) : Completable
+    fun saveCoach(coachEntity: CoachEntity): Completable
+
+    //PLAYER
+    fun savePlayer(playerEntity: PlayerEntity): Completable
+    fun getPlayers(positionType: PlayerPositionType): DataSource.Factory<Int, PlayerModelView>
 
     // CURRENT SQUAD
-    fun getCurrentSquad(): LiveData<CurrentSquadEntity>
+    fun countCurrentSquad(): Single<Int>
+    fun currentSquad(): Flowable<CurrentSquadEntity>
     fun getLocalCurrentSquad(): Single<CurrentSquadEntity>
-    fun getCountCurrentSquad(): Single<Int>
-    fun insertCurrentSquad(currentSquadEntity: CurrentSquadEntity) : Completable
-    fun updateCurrentSquad(currentSquadEntity: CurrentSquadEntity) : Completable
+    fun insertCurrentSquad(currentSquadEntity: CurrentSquadEntity): Completable
+    fun updateCurrentSquad(currentSquadEntity: CurrentSquadEntity): Completable
 
 }

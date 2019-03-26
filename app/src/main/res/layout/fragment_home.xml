@@ -24,6 +24,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+                    android:onClick="@{() -> viewmodel.clickedMySquads()}"
                     android:text="Squads"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
