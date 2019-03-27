@@ -6,8 +6,6 @@ import com.calestu.squadscbfa.data.entity.CoachEntity
 import com.calestu.squadscbfa.data.entity.CurrentSquadEntity
 import com.calestu.squadscbfa.data.entity.PlayerEntity
 import com.calestu.squadscbfa.data.model.type.PlayerPositionType
-import com.calestu.squadscbfa.data.source.remote.model.AppVersionRemoteModel
-import com.calestu.squadscbfa.ui.module.player.model.PlayerModelView
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -25,7 +23,7 @@ interface LocalSource {
 
     //PLAYER
     fun savePlayer(playerEntity: PlayerEntity): Completable
-    fun getPlayers(positionType: PlayerPositionType): DataSource.Factory<Int, PlayerModelView>
+    fun getPlayers(positionType: PlayerPositionType): DataSource.Factory<Int, PlayerEntity>
 
     // CURRENT SQUAD
     fun countCurrentSquad(): Single<Int>

@@ -21,7 +21,7 @@
 
         <variable
                 name="callback"
-                type="com.calestu.squadscbfa.ui.module.squad.add.SquadCoachUserActionsListener" />
+                type="com.calestu.squadscbfa.ui.module.squad.edit.SquadEditCoachUserActionsListener" />
 
     </data>
 

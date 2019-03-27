@@ -7,14 +7,43 @@
     <data>
 
         <import type="android.view.View"/>
+        <import type="androidx.lifecycle.LiveData"/>
+
+        <import type="com.calestu.squadscbfa.ui.base.Status" />
+
+        <import type="com.calestu.squadscbfa.ui.base.Resource" />
+
+        <import type="com.calestu.squadscbfa.ui.module.squad.add.model.SquadAddModel"/>
 
         <import type="com.calestu.squadscbfa.data.model.PlayerSquadModel"/>
 
         <import type="com.calestu.squadscbfa.data.model.CoachSquadModel"/>
 
+        <import type="com.calestu.squadscbfa.data.model.type.FormationType"/>
+
+        <variable
+                name="playersquadmodel"
+                type="PlayerSquadModel" />
+
+        <variable
+                name="coachsquadmodel"
+                type="CoachSquadModel" />
+
         <variable
                 name="viewmodel"
-                type="com.calestu.squadscbfa.ui.module.squad.edit.SquadEditViewModel" />
+                type="com.calestu.squadscbfa.ui.module.squad.add.SquadAddViewModel" />
+
+        <variable
+                name="squad"
+                type="LiveData&lt;Resource&lt;SquadAddModel>>" />
+
+        <variable
+                name="playerCallback"
+                type="com.calestu.squadscbfa.ui.module.squad.add.SquadPlayerUserActionsListener" />
+
+        <variable
+                name="coachCallback"
+                type="com.calestu.squadscbfa.ui.module.squad.add.SquadCoachUserActionsListener" />
 
     </data>
 
@@ -54,8 +83,8 @@
         <include
                 android:id="@+id/playerAta2"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) viewmodel.squad.data.playerAta2}"
-                app:callback="@{() -> viewmodel.clickedPlayer(viewmodel.squad.data.playerAta2)}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerAta2}"
+                app:callback="@{() -> viewmodel.clickedPlayer(squad.data.playerAta2)}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -66,8 +95,8 @@
         <include
                 android:id="@+id/playerAta1"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) viewmodel.squad.data.playerAta1}"
-                app:callback="@{() -> viewmodel.clickedPlayer(viewmodel.squad.data.playerAta1)}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerAta1}"
+                app:callback="@{() -> viewmodel.clickedPlayer(squad.data.playerAta1)}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -78,8 +107,8 @@
         <include
                 android:id="@+id/playerMei4"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) viewmodel.squad.data.playerMei4}"
-                app:callback="@{() -> viewmodel.clickedPlayer(viewmodel.squad.data.playerMei4)}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerMei4}"
+                app:callback="@{() -> viewmodel.clickedPlayer(squad.data.playerMei4)}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -92,8 +121,8 @@
         <include
                 android:id="@+id/playerMei3"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) viewmodel.squad.data.playerMei3}"
-                app:callback="@{() -> viewmodel.clickedPlayer(viewmodel.squad.data.playerMei3)}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerMei3}"
+                app:callback="@{() -> viewmodel.clickedPlayer(squad.data.playerMei3)}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintBottom_toTopOf="@+id/playerGol"
@@ -105,8 +134,8 @@
         <include
                 android:id="@+id/playerMei2"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) viewmodel.squad.data.playerMei2}"
-                app:callback="@{() -> viewmodel.clickedPlayer(viewmodel.squad.data.playerMei2)}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerMei2}"
+                app:callback="@{() -> viewmodel.clickedPlayer(squad.data.playerMei2)}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintBottom_toTopOf="@+id/playerGol"
@@ -118,8 +147,8 @@
         <include
                 android:id="@+id/playerMei1"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) viewmodel.squad.data.playerMei1}"
-                app:callback="@{() -> viewmodel.clickedPlayer(viewmodel.squad.data.playerMei1)}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerMei1}"
+                app:callback="@{() -> viewmodel.clickedPlayer(squad.data.playerMei1)}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -132,8 +161,8 @@
         <include
                 android:id="@+id/playerZag2"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) viewmodel.squad.data.playerZag2}"
-                app:callback="@{() -> viewmodel.clickedPlayer(viewmodel.squad.data.playerZag2)}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerZag2}"
+                app:callback="@{() -> viewmodel.clickedPlayer(squad.data.playerZag2)}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintBottom_toTopOf="@+id/playerGol"
@@ -145,8 +174,8 @@
         <include
                 android:id="@+id/playerZag1"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) viewmodel.squad.data.playerZag1}"
-                app:callback="@{() -> viewmodel.clickedPlayer(viewmodel.squad.data.playerZag1)}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerZag1}"
+                app:callback="@{() -> viewmodel.clickedPlayer(squad.data.playerZag1)}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintBottom_toTopOf="@+id/playerGol"
@@ -158,8 +187,8 @@
         <include
                 android:id="@+id/playerLat2"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) viewmodel.squad.data.playerLat2}"
-                app:callback="@{() -> viewmodel.clickedPlayer(viewmodel.squad.data.playerLat2)}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerLat2}"
+                app:callback="@{() -> viewmodel.clickedPlayer(squad.data.playerLat2)}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -172,8 +201,8 @@
         <include
                 android:id="@+id/playerLat1"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) viewmodel.squad.data.playerLat1}"
-                app:callback="@{() -> viewmodel.clickedPlayer(viewmodel.squad.data.playerLat1)}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerLat1}"
+                app:callback="@{() -> viewmodel.clickedPlayer(squad.data.playerLat1)}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -186,8 +215,8 @@
         <include
                 android:id="@+id/playerGol"
                 layout="@layout/player_squad"
-                app:playersquadmodel="@{(PlayerSquadModel) viewmodel.squad.data.playerGol}"
-                app:callback="@{() -> viewmodel.clickedPlayer(viewmodel.squad.data.playerGol)}"
+                app:playersquadmodel="@{(PlayerSquadModel) squad.data.playerGol}"
+                app:callback="@{() -> viewmodel.clickedPlayer(squad.data.playerGol)}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontalBotFirst"
@@ -198,8 +227,8 @@
         <include
                 android:id="@+id/coach"
                 layout="@layout/coach_squad"
-                app:coachsquadmodel="@{(CoachSquadModel) viewmodel.squad.data.coach}"
-                app:callback="@{() -> viewmodel.clickedCoach(viewmodel.squad.data.coach)}"
+                app:coachsquadmodel="@{(CoachSquadModel) squad.data.coach}"
+                app:callback="@{() -> viewmodel.clickedCoach(squad.data.coach)}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontalBotFirst"

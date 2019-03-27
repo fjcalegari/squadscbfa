@@ -6,6 +6,7 @@ import com.calestu.squadscbfa.ui.module.home.HomeFragment
 import com.calestu.squadscbfa.ui.module.mysquad.MySquadFragment
 import com.calestu.squadscbfa.ui.module.player.PlayerFragment
 import com.calestu.squadscbfa.ui.module.squad.add.SquadAddFragment
+import com.calestu.squadscbfa.ui.module.squad.edit.SquadEditFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -18,6 +19,9 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector(modules = [MySquadModule::class])
     abstract fun contributeMySquadFragment(): MySquadFragment
+
+    @ContributesAndroidInjector(modules = [SquadEditModule::class])
+    abstract fun contributeSquadEditFragment(): SquadEditFragment
 
     @ContributesAndroidInjector(modules = [SquadAddModule::class])
     abstract fun contributeSquadAddFragment(): SquadAddFragment

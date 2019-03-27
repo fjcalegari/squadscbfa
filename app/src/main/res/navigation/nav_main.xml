@@ -35,6 +35,28 @@
             android:label="MySquadFragment"
             tools:layout="@layout/fragment_mysquad">
 
+        <action
+                android:id="@+id/mySquadToEdit"
+                app:destination="@id/squadEditFragment" />
+
+    </fragment>
+
+    <fragment
+            android:id="@+id/squadEditFragment"
+            android:name="com.calestu.squadscbfa.ui.module.squad.edit.SquadEditFragment"
+            android:label="SquadEditFragment"
+            tools:layout="@layout/fragment_squad_edit">
+
+        <argument
+                android:name="squadEntryid"
+                app:argType="string"/>
+
+        <action
+                android:id="@+id/editSquadToPlayer"
+                destination="@+id/playerFragment"
+                app:destination="@id/playerFragment"
+                />
+
     </fragment>
 
     <fragment

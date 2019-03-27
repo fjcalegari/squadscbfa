@@ -6,7 +6,6 @@ import com.calestu.squadscbfa.data.entity.CoachEntity
 import com.calestu.squadscbfa.data.entity.CurrentSquadEntity
 import com.calestu.squadscbfa.data.entity.PlayerEntity
 import com.calestu.squadscbfa.data.model.type.PlayerPositionType
-import com.calestu.squadscbfa.ui.module.player.model.PlayerModelView
 import com.calestu.squadscbfa.util.ext.dateTimeNow
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -53,7 +52,7 @@ class LocalSourceImpl(private val localDatabase: LocalDatabase) :
         return localDatabase.localDao().savePlayer(playerEntity)
     }
 
-    override fun getPlayers(positionType: PlayerPositionType): DataSource.Factory<Int, PlayerModelView> {
+    override fun getPlayers(positionType: PlayerPositionType): DataSource.Factory<Int, PlayerEntity> {
         return localDatabase.localDao().getPlayers(positionType)
     }
 

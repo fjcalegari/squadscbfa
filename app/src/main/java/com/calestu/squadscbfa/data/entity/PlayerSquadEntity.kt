@@ -34,6 +34,6 @@ data class PlayerSquadEntity(
 
     val posFormation: PlayerPositionFormationType,
 
-    val captain: Boolean
+    val captain: Boolean = false
 
 )

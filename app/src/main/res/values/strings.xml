@@ -2,6 +2,8 @@
     <string name="app_name">Squad</string>
 
     <string name="mysquad_empty" translation_description="">empty</string>
+    <string name="mysquad_item_formation"><u>Formação: </u>%s</string>
+    <string name="mysquad_item_updated_time"><u>Editado em: </u>%s</string>
 
     <string name="retry">Retry</string>
     <string name="unknown_error">Unknown Error</string>

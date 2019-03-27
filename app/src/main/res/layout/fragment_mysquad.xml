@@ -39,6 +39,7 @@
                 android:id="@+id/rootDataLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 >
 
         <androidx.recyclerview.widget.RecyclerView
@@ -46,6 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
+                android:layoutAnimation="@anim/layout_animation_from_bottom"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -69,6 +71,7 @@
         <include
                 android:id="@+id/loadingView"
                 layout="@layout/loading_view"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:visibility="@{viewmodel.mySquadsLiveData.status == Status.LOADING ? View.VISIBLE : View.GONE, default=gone}"
                 tools:visibility="gone"
                 />

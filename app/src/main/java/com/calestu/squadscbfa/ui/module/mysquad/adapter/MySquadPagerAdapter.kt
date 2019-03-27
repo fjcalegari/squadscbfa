@@ -26,8 +26,8 @@ class MySquadPagerAdapter(
         fun bind(modelView: MySquadItemModelView?, clickListener: ItemClickListener<MySquadItemModelView>) {
             with(binding) {
                 modelView?.let {
-                    this.squad = modelView
-                    itemView.setOnClickListener { v -> clickListener.onItemClick(v, modelView) }
+                    this.squad = it
+                    itemView.setOnClickListener { v -> clickListener.onItemClick(v, it) }
                     this.executePendingBindings()
                 }
             }

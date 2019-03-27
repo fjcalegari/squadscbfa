@@ -92,7 +92,7 @@
 
         <include
                 android:id="@+id/formation442"
-                layout="@layout/layout_formation_442"
+                layout="@layout/layout_formation_442_add"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 bind:viewmodel="@{viewmodel}"

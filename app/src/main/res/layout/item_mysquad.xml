@@ -33,42 +33,65 @@
                 android:paddingEnd="@dimen/activity_horizontal_margin">
 
             <TextView
-                    android:id="@+id/tvLabelPos"
-                    style="@style/TextAppearance.MaterialComponents.Body1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacingTiny"
-                    android:maxLines="1"
-                    android:textColor="@color/gray_dark"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    tools:text="POS" />
-
-            <ImageView
-                    android:id="@+id/iconClub"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="@dimen/spacingSmall"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tvLabelPos"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    tools:src="@drawable/ic_club_corinthians"
-                    />
-
-            <TextView
                     android:id="@+id/tvTitle"
                     style="@style/TextAppearance.MaterialComponents.Body1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacingSmall"
+                    android:layout_marginStart="@dimen/spacingTiny"
+                    android:layout_marginTop="@dimen/spacingSmall"
                     android:maxLines="1"
                     android:textColor="@color/gray_dark"
+                    android:text="@{squad.title}"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/iconClub"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     tools:text="@tools:sample/lorem" />
-            
+
+            <TextView
+                    android:id="@+id/tvRound"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacingTiny"
+                    android:layout_marginTop="@dimen/spacingSmall"
+                    android:maxLines="1"
+                    android:textColor="@color/gray_dark"
+                    android:text="@{squad.round.title}"
+                    app:layout_constraintTop_toBottomOf="@id/tvTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/tvFormation"
+                    tools:text="@tools:sample/lorem" />
+
+            <TextView
+                    android:id="@+id/tvFormation"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacingTiny"
+                    android:layout_marginTop="@dimen/spacingSmall"
+                    android:maxLines="1"
+                    android:textColor="@color/gray_dark"
+                    android:text="@{@string/mysquad_item_formation(squad.formation.title)}"
+                    app:layout_constraintTop_toBottomOf="@id/tvRound"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/tvUpdatedTime"
+                    tools:text="@tools:sample/lorem" />
+
+            <TextView
+                    android:id="@+id/tvUpdatedTime"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacingTiny"
+                    android:layout_marginTop="@dimen/spacingSmall"
+                    android:layout_marginBottom="@dimen/spacingSmall"
+                    android:maxLines="1"
+                    android:textColor="@color/gray_dark"
+                    android:text="@{@string/mysquad_item_updated_time(squad.updatedTime)}"
+                    app:layout_constraintTop_toBottomOf="@id/tvFormation"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="@tools:sample/date/hhmmss" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

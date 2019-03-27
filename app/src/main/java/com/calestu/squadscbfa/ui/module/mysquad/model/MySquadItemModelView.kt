@@ -16,7 +16,7 @@ data class MySquadItemModelView(
 
         val diffCallback = object : DiffUtil.ItemCallback<MySquadItemModelView>() {
             override fun areItemsTheSame(oldItem: MySquadItemModelView, newItem: MySquadItemModelView): Boolean =
-                oldItem == newItem
+                oldItem.entryid == newItem.entryid
 
             override fun areContentsTheSame(oldItem: MySquadItemModelView, newItem: MySquadItemModelView): Boolean =
                 oldItem == newItem

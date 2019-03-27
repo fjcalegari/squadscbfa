@@ -16,11 +16,11 @@
 
         <import type="com.calestu.squadscbfa.ui.base.Resource" />
 
-        <import type="com.calestu.squadscbfa.ui.module.player.model.PlayerModelView"/>
+        <import type="com.calestu.squadscbfa.ui.module.player.model.PlayerItemModelView"/>
 
         <variable
                 name="players"
-                type="LiveData&lt;Resource&lt;PagedList&lt;PlayerModelView>>>" />
+                type="LiveData&lt;Resource&lt;PagedList&lt;PlayerItemModelView>>>" />
 
         <variable
                 name="viewmodel"

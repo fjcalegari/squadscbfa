@@ -7,7 +7,6 @@ import com.calestu.squadscbfa.data.entity.CoachEntity
 import com.calestu.squadscbfa.data.entity.CurrentSquadEntity
 import com.calestu.squadscbfa.data.entity.PlayerEntity
 import com.calestu.squadscbfa.data.model.type.PlayerPositionType
-import com.calestu.squadscbfa.ui.module.player.model.PlayerModelView
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -36,8 +35,8 @@ interface LocalDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun savePlayer(player: PlayerEntity): Completable
 
-    @Query("SELECT * FROM player WHERE pos == :positionType ORDER BY name ASC")
-    fun getPlayers(positionType: PlayerPositionType): DataSource.Factory<Int, PlayerModelView>
+    @Query("SELECT * FROM player WHERE pos == :positionType AND active == 1 ORDER BY name ASC")
+    fun getPlayers(positionType: PlayerPositionType): DataSource.Factory<Int, PlayerEntity>
 
     //CURRENT SQUAD
     @Query("SELECT COUNT(*) FROM currentsquad")

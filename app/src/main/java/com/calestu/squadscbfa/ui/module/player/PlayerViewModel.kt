@@ -10,8 +10,8 @@ import com.calestu.squadscbfa.data.model.type.PlayerPositionType
 import com.calestu.squadscbfa.data.usecase.SquadPlayerUseCase
 import com.calestu.squadscbfa.ui.base.Resource
 import com.calestu.squadscbfa.ui.base.viewmodel.BaseViewModel
-import com.calestu.squadscbfa.ui.module.player.model.PlayerModelView
-import com.calestu.squadscbfa.util.AbsentLiveData
+import com.calestu.squadscbfa.ui.module.player.model.PlayerItemModelView
+import io.reactivex.rxkotlin.addTo
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class PlayerViewModel @Inject constructor(
 
     private val _playersArgs = MutableLiveData<PlayerArgs>()
 
-    val players: LiveData<Resource<PagedList<PlayerModelView>>> = Transformations
+    val players: LiveData<Resource<PagedList<PlayerItemModelView>>> = Transformations
         .switchMap(_playersArgs) {args ->
             if (args == null) {
                 playerUseCase.initLoading()
@@ -30,7 +30,26 @@ class PlayerViewModel @Inject constructor(
             }
         }
 
-    fun setPlayersArgs(currentSquadEntryid: String, playerPositionFormationIndex: Int) {
+    private fun insertPlayerSquad(
+        squadEntryId: String,
+        playerPositionFormationType: PlayerPositionFormationType,
+        playerItemModelView: PlayerItemModelView) {
+
+        playerUseCase.insertPlayerSquad(squadEntryId, playerPositionFormationType, playerItemModelView)
+            .subscribe()
+            .addTo(compositeDisposable)
+
+    }
+
+    fun clickedPlayer(player: PlayerItemModelView) {
+        Timber.d("clickedPlayer: $player")
+        Timber.d("clickedPlayer_playersArgs: ${_playersArgs.value}")
+        _playersArgs.value?.let {
+            insertPlayerSquad(it.currentSquadEntryid, it.playerPositionFormationType, player)
+        }
+    }
+
+    private fun setPlayersArgs(currentSquadEntryid: String, playerPositionFormationIndex: Int) {
         val playersArgs = PlayerArgs(currentSquadEntryid, playerPositionFormationIndex)
         Timber.d("setPlayersArgs: $playersArgs")
         if (_playersArgs.value == playersArgs) {
@@ -48,10 +67,6 @@ class PlayerViewModel @Inject constructor(
 
         val playerPositionType:PlayerPositionType
             get() = playerPositionFormationType.playerPositionType
-    }
-
-    fun clickedPlayer(player: PlayerModelView) {
-        Timber.d("clickedPlayer: $player")
     }
 
     override fun onFirsTimeUiCreate(bundle: Bundle?) {

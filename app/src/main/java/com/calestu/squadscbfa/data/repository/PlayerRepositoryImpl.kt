@@ -3,13 +3,14 @@ package com.calestu.squadscbfa.data.repository
 import androidx.paging.DataSource
 import com.calestu.squadscbfa.data.entity.PlayerEntity
 import com.calestu.squadscbfa.data.mapper.toEntity
+import com.calestu.squadscbfa.data.mapper.toPlayerItemModelView
 import com.calestu.squadscbfa.data.model.AppVersionResultModel
 import com.calestu.squadscbfa.data.model.type.PlayerPositionType
 import com.calestu.squadscbfa.data.source.local.LocalSource
 import com.calestu.squadscbfa.data.source.remote.RemoteSource
 import com.calestu.squadscbfa.data.source.remote.model.PlayerRemoteModel
 import com.calestu.squadscbfa.data.source.remote.model.type.AppVersionRemoteType
-import com.calestu.squadscbfa.ui.module.player.model.PlayerModelView
+import com.calestu.squadscbfa.ui.module.player.model.PlayerItemModelView
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -20,8 +21,8 @@ class PlayerRepositoryImpl @Inject constructor(
     private val remoteSource: RemoteSource
 ) : PlayerRepository {
 
-    override fun getPlayers(positionType: PlayerPositionType): DataSource.Factory<Int, PlayerModelView> {
-        return localSource.getPlayers(positionType)
+    override fun getPlayers(positionType: PlayerPositionType): DataSource.Factory<Int, PlayerItemModelView> {
+        return localSource.getPlayers(positionType).map { it.toPlayerItemModelView() }
     }
 
     override fun loadPlayers(appVersionResultModel: AppVersionResultModel): Completable {

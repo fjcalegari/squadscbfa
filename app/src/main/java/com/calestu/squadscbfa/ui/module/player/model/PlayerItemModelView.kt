@@ -5,23 +5,21 @@ import androidx.room.Ignore
 import com.calestu.squadscbfa.data.model.type.ClubType
 import com.calestu.squadscbfa.data.model.type.PlayerPositionType
 
-data class PlayerModelView(
+data class PlayerItemModelView(
     val entryid: Int,
     val name: String,
     val club: ClubType,
-    val pos: PlayerPositionType
+    val pos: PlayerPositionType,
+    val inSquad: Boolean = false
 ) {
-
-    @Ignore
-    var inSquad: Boolean = true
 
     companion object {
 
-        val diffCallback = object : DiffUtil.ItemCallback<PlayerModelView>() {
-            override fun areItemsTheSame(oldItem: PlayerModelView, newItem: PlayerModelView): Boolean =
+        val diffCallback = object : DiffUtil.ItemCallback<PlayerItemModelView>() {
+            override fun areItemsTheSame(oldItem: PlayerItemModelView, newItem: PlayerItemModelView): Boolean =
                 oldItem == newItem
 
-            override fun areContentsTheSame(oldItem: PlayerModelView, newItem: PlayerModelView): Boolean =
+            override fun areContentsTheSame(oldItem: PlayerItemModelView, newItem: PlayerItemModelView): Boolean =
                 oldItem == newItem
         }
     }

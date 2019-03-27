@@ -12,7 +12,7 @@
 
         <variable
                 name="player"
-                type="com.calestu.squadscbfa.ui.module.player.model.PlayerModelView" />
+                type="com.calestu.squadscbfa.ui.module.player.model.PlayerItemModelView" />
 
     </data>
 
@@ -79,7 +79,8 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                     app:icon="@drawable/ic_arrow_selected"
                     app:iconGravity="textStart"
-                    android:visibility="@{player.inSquad ? View.GONE : View.VISIBLE, default=visible}"
+                    app:isGone="@{player.inSquad}"
+                    tools:visibility="visible"
                     android:layout_marginEnd="@dimen/spacingSmall"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -92,7 +93,8 @@
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
                     app:icon="@drawable/ic_arrow_unselected"
                     app:iconGravity="textStart"
-                    android:visibility="@{player.inSquad ? View.VISIBLE : View.GONE, default=gone}"
+                    app:isGone="@{!player.inSquad}"
+                    tools:visibility="gone"
                     android:layout_marginEnd="@dimen/spacingSmall"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

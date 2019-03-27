@@ -31,8 +31,6 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            debuggable true
-            useProguard false
         }
         release {
             minifyEnabled false
@@ -60,16 +58,10 @@ android {
         }
     }
 
-    packagingOptions {
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'LICENSE.txt'
-    }
-
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
 
     implementation 'com.github.FrangSierra:RxFirebase:1.5.6'
 
