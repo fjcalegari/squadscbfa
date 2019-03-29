@@ -6,29 +6,12 @@
     <data>
 
         <import type="android.view.View"/>
-        <import type="androidx.lifecycle.LiveData"/>
-
-        <import type="java.util.List" />
-
-        <import type="androidx.paging.PagedList" />
 
         <import type="com.calestu.squadscbfa.ui.base.Status" />
-
-        <import type="com.calestu.squadscbfa.ui.base.Resource" />
-
-        <import type="com.calestu.squadscbfa.ui.module.player.model.PlayerItemModelView"/>
-
-        <variable
-                name="players"
-                type="LiveData&lt;Resource&lt;PagedList&lt;PlayerItemModelView>>>" />
 
         <variable
                 name="viewmodel"
                 type="com.calestu.squadscbfa.ui.module.player.PlayerViewModel" />
-
-        <variable
-                name="retryCallback"
-                type="com.calestu.squadscbfa.ui.base.RetryCallback" />
 
     </data>
 
@@ -50,15 +33,15 @@
                 />
 
         <include
-                layout="@layout/loading_state"
-                app:resource="@{(Resource) players}"
-                app:callback="@{() -> retryCallback.retry()}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/loadingView"
+                layout="@layout/loading_view"
+                android:visibility="@{viewmodel.players.status == Status.LOADING ? View.VISIBLE : View.GONE, default=gone}"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                tools:visibility="gone"
+                />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

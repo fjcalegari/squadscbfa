@@ -10,6 +10,7 @@ import com.calestu.squadscbfa.ui.base.fragment.BaseViewModelFragment
 import com.calestu.squadscbfa.ui.module.player.adapter.PlayersPagerAdapter
 import com.calestu.squadscbfa.ui.module.player.model.PlayerItemModelView
 import com.calestu.squadscbfa.util.ext.watch
+import timber.log.Timber
 
 class PlayerFragment : BaseViewModelFragment<FragmentPlayersBinding, PlayerViewModel>() {
 
@@ -20,7 +21,6 @@ class PlayerFragment : BaseViewModelFragment<FragmentPlayersBinding, PlayerViewM
 
         with(binding) {
             viewmodel = viewModel
-            players = viewModel.players
         }
 
         with(binding.rvPlayers) {
@@ -31,7 +31,7 @@ class PlayerFragment : BaseViewModelFragment<FragmentPlayersBinding, PlayerViewM
         with(viewModel) {
             players.watch(viewLifecycleOwner){
                 if (it.status == Status.SUCCESS) {
-                    playersPagerAdapter.submitList(it.data)
+                    playersPagerAdapter.submitList(it.data?.toMutableList())
                 }
             }
         }

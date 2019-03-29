@@ -3,18 +3,18 @@ package com.calestu.squadscbfa.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.DataSource
+import com.calestu.squadscbfa.data.entity.PlayerEntity
 import com.calestu.squadscbfa.data.entity.SquadEntity
-import com.calestu.squadscbfa.data.mapper.toEntity
-import com.calestu.squadscbfa.data.mapper.toMySquadItemModelView
-import com.calestu.squadscbfa.data.mapper.toSquadEditModelView
-import com.calestu.squadscbfa.data.mapper.toSquadEntity
+import com.calestu.squadscbfa.data.mapper.*
 import com.calestu.squadscbfa.data.model.type.PlayerPositionFormationType
+import com.calestu.squadscbfa.data.model.type.PlayerPositionType
 import com.calestu.squadscbfa.data.source.local.LocalSource
 import com.calestu.squadscbfa.data.source.local.SquadSource
 import com.calestu.squadscbfa.ui.module.mysquad.model.MySquadItemModelView
 import com.calestu.squadscbfa.ui.module.player.model.PlayerItemModelView
 import com.calestu.squadscbfa.ui.module.squad.edit.model.SquadEditModelView
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -43,8 +43,10 @@ class SquadRepositoryImpl @Inject constructor(
         playerItemModelView: PlayerItemModelView): Completable =
         squadSource.insertPlayerSquad(playerItemModelView.toEntity(squadEntryId, playerPositionFormationType))
 
-    override fun getPlayersSquad(squadEntryId: String): LiveData<List<PlayerItemModelView>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getPlayersSquad(squadEntryId: String, positionType: PlayerPositionType): LiveData<List<PlayerItemModelView>> {
+        return Transformations.map(squadSource.getPlayersSquad(squadEntryId, positionType)) {
+            it.map { p -> p.toPlayerItemModelView(true) }
+        }
     }
 
     override fun insertMySquad(squadEntity: SquadEntity): Completable {

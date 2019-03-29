@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingComponent
 import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.calestu.squadscbfa.databinding.ItemPlayerBinding
 import com.calestu.squadscbfa.ui.base.ItemClickListener
@@ -12,7 +13,7 @@ import com.calestu.squadscbfa.ui.module.player.model.PlayerItemModelView
 class PlayersPagerAdapter(
     private val itemClickListener: ItemClickListener<PlayerItemModelView>,
     private val dataBindingComponent: DataBindingComponent
-) : PagedListAdapter<PlayerItemModelView, PlayersPagerAdapter.ItemHolder>(PlayerItemModelView.diffCallback) {
+) : ListAdapter<PlayerItemModelView, PlayersPagerAdapter.ItemHolder>(PlayerItemModelView.diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(ItemPlayerBinding.inflate(LayoutInflater.from(parent.context), parent, false, dataBindingComponent))

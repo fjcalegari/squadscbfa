@@ -1,5 +1,6 @@
 package com.calestu.squadscbfa.data.source.local
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
 import com.calestu.squadscbfa.data.entity.AppVersionEntity
@@ -35,8 +36,8 @@ interface LocalDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun savePlayer(player: PlayerEntity): Completable
 
-    @Query("SELECT * FROM player WHERE pos == :positionType AND active == 1 ORDER BY name ASC")
-    fun getPlayers(positionType: PlayerPositionType): DataSource.Factory<Int, PlayerEntity>
+    @Query("SELECT * FROM player WHERE pos == :positionType AND active == 1 ORDER BY name ASC LIMIT 10")
+    fun getPlayers(positionType: PlayerPositionType): LiveData<List<PlayerEntity>>
 
     //CURRENT SQUAD
     @Query("SELECT COUNT(*) FROM currentsquad")

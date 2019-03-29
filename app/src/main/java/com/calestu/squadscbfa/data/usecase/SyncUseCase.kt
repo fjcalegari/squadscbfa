@@ -34,27 +34,27 @@ class SyncUseCase @Inject constructor(
     fun sync(): LiveData<Resource<Boolean>> {
         setValue(Resource.loading(null))
 
-        result.addSource(dataManager.getCurrentUser()
-            .compose(loadAppVersion())
-            .compose(loadData())
-            .compose(saveDataManager())
-            .compose(saveAppVersion())
-            .subscribeOn(schedulerProvider.networkIO())
-            .observeOn(schedulerProvider.ui())
-            .toFlowable()
-            .toState()
-            .toLiveData()) { newData ->
-               setValue(newData)
-            }
-
-//        result.addSource(Single.just(true)
-//            .subscribeOn(schedulerProvider.io())
+//        result.addSource(dataManager.getCurrentUser()
+//            .compose(loadAppVersion())
+//            .compose(loadData())
+//            .compose(saveDataManager())
+//            .compose(saveAppVersion())
+//            .subscribeOn(schedulerProvider.networkIO())
 //            .observeOn(schedulerProvider.ui())
 //            .toFlowable()
 //            .toState()
 //            .toLiveData()) { newData ->
-//                setValue(newData)
+//               setValue(newData)
 //            }
+
+        result.addSource(Single.just(true)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
+            .toFlowable()
+            .toState()
+            .toLiveData()) { newData ->
+                setValue(newData)
+            }
 
         return asLiveData()
     }

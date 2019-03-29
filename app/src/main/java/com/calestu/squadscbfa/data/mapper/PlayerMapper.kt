@@ -16,11 +16,12 @@ fun PlayerRemoteModel.toEntity(clubType: ClubType) = PlayerEntity(
     pos = PlayerPositionType.getPlayerPosition(pos)
 )
 
-fun PlayerEntity.toPlayerItemModelView() = PlayerItemModelView(
+fun PlayerEntity.toPlayerItemModelView(inSquad: Boolean = false) = PlayerItemModelView(
     entryid = entryid,
     name = name,
     club = club,
-    pos = pos
+    pos = pos,
+    inSquad = inSquad
 )
 
 fun PlayerItemModelView.toEntity(squadEntryId: String, playerPositionFormationType: PlayerPositionFormationType) = PlayerSquadEntity(

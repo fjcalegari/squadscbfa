@@ -1,5 +1,7 @@
 package com.calestu.squadscbfa.data.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import androidx.paging.DataSource
 import com.calestu.squadscbfa.data.entity.PlayerEntity
 import com.calestu.squadscbfa.data.mapper.toEntity
@@ -21,8 +23,10 @@ class PlayerRepositoryImpl @Inject constructor(
     private val remoteSource: RemoteSource
 ) : PlayerRepository {
 
-    override fun getPlayers(positionType: PlayerPositionType): DataSource.Factory<Int, PlayerItemModelView> {
-        return localSource.getPlayers(positionType).map { it.toPlayerItemModelView() }
+    override fun getPlayers(positionType: PlayerPositionType): LiveData<List<PlayerItemModelView>> {
+        return Transformations.map(localSource.getPlayers(positionType)) {
+            it.map { p -> p.toPlayerItemModelView(false) }
+        }
     }
 
     override fun loadPlayers(appVersionResultModel: AppVersionResultModel): Completable {

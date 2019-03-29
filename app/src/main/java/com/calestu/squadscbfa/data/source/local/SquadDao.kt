@@ -3,10 +3,14 @@ package com.calestu.squadscbfa.data.source.local
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
+import com.calestu.squadscbfa.data.entity.PlayerEntity
 import com.calestu.squadscbfa.data.entity.PlayerSquadEntity
 import com.calestu.squadscbfa.data.entity.SquadEntity
 import com.calestu.squadscbfa.data.model.SquadAllPlayers
+import com.calestu.squadscbfa.data.model.type.PlayerPositionType
+import com.calestu.squadscbfa.ui.module.player.model.PlayerItemModelView
 import io.reactivex.Completable
+import io.reactivex.Flowable
 
 @Dao
 interface SquadDao {
@@ -27,7 +31,12 @@ interface SquadDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPlayerSquad(playerSquadEntity: PlayerSquadEntity) : Completable
 
-    @Query("SELECT * FROM squadplayers WHERE squad == :squadEntryId")
-    fun getPlayersSquad(squadEntryId: String): LiveData<List<PlayerSquadEntity>>
+    @Query("""
+        SELECT player.* FROM player
+         JOIN squadplayers ON player.entryid = squadplayers.player
+         JOIN squad ON squad.entryid = :squadEntryId
+         WHERE player.pos = :positionType
+        """)
+    fun getPlayersSquad(squadEntryId: String, positionType: PlayerPositionType): LiveData<List<PlayerEntity>>
 
 }

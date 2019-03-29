@@ -1,5 +1,6 @@
 package com.calestu.squadscbfa.data.source.local
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import com.calestu.squadscbfa.data.entity.AppVersionEntity
 import com.calestu.squadscbfa.data.entity.CoachEntity
@@ -52,7 +53,7 @@ class LocalSourceImpl(private val localDatabase: LocalDatabase) :
         return localDatabase.localDao().savePlayer(playerEntity)
     }
 
-    override fun getPlayers(positionType: PlayerPositionType): DataSource.Factory<Int, PlayerEntity> {
+    override fun getPlayers(positionType: PlayerPositionType): LiveData<List<PlayerEntity>> {
         return localDatabase.localDao().getPlayers(positionType)
     }
 

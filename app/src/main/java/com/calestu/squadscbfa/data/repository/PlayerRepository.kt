@@ -1,5 +1,6 @@
 package com.calestu.squadscbfa.data.repository
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import com.calestu.squadscbfa.data.entity.PlayerEntity
 import com.calestu.squadscbfa.data.model.AppVersionResultModel
@@ -13,6 +14,6 @@ interface PlayerRepository {
 
     fun savePlayer(playerEntity: PlayerEntity): Completable
 
-    fun getPlayers(positionType: PlayerPositionType): DataSource.Factory<Int, PlayerItemModelView>
+    fun getPlayers(positionType: PlayerPositionType): LiveData<List<PlayerItemModelView>>
 
 }
