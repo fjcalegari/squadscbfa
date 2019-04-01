@@ -21,16 +21,16 @@ import com.calestu.squadscbfa.data.model.type.PlayerPositionFormationType
             childColumns = arrayOf("player")
         )
     ],
-    indices = [Index(value = ["squad", "player", "posFormation"], unique = true)]
+    indices = [Index(value = ["squad", "player"], unique = true)]
 )
 data class PlayerSquadEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
-
-    val squad: String,
+    val id: Long,
 
     val player: Int,
+
+    val squad: String,
 
     val posFormation: PlayerPositionFormationType,
 

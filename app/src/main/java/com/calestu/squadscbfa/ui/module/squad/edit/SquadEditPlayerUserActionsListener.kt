@@ -1,9 +1,9 @@
 package com.calestu.squadscbfa.ui.module.squad.edit
 
-import com.calestu.squadscbfa.data.model.PlayerSquadModel
+import com.calestu.squadscbfa.ui.module.squad.edit.model.SquadPlayerPositionEditModelView
 
 interface SquadEditPlayerUserActionsListener {
 
-    fun clickedPlayer(player: PlayerSquadModel)
+    fun clickedPlayer(player: SquadPlayerPositionEditModelView)
 
 }

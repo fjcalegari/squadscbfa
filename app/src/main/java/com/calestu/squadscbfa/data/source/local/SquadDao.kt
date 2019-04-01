@@ -6,11 +6,10 @@ import androidx.room.*
 import com.calestu.squadscbfa.data.entity.PlayerEntity
 import com.calestu.squadscbfa.data.entity.PlayerSquadEntity
 import com.calestu.squadscbfa.data.entity.SquadEntity
-import com.calestu.squadscbfa.data.model.SquadAllPlayers
+import com.calestu.squadscbfa.data.model.SquadWithPlayersDbModel
 import com.calestu.squadscbfa.data.model.type.PlayerPositionType
-import com.calestu.squadscbfa.ui.module.player.model.PlayerItemModelView
 import io.reactivex.Completable
-import io.reactivex.Flowable
+import io.reactivex.Single
 
 @Dao
 interface SquadDao {
@@ -19,11 +18,11 @@ interface SquadDao {
     fun getMySquads(ownerUid: String): DataSource.Factory<Int, SquadEntity>
 
     @Transaction
-    @Query("SELECT * FROM squad WHERE entryid == :entryid LIMIT 1")
-    fun getMySquad(entryid: String): LiveData<SquadAllPlayers>
+    @Query("SELECT * FROM squad WHERE entryid == :entryid")
+    fun getMySquad(entryid: String): Single<SquadWithPlayersDbModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMySquad(squadEntity: SquadEntity) : Completable
+    fun insertMySquad(squadEntity: SquadEntity) : Long
 
     @Update
     fun updateMySquad(squadEntity: SquadEntity) : Completable
@@ -31,12 +30,13 @@ interface SquadDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPlayerSquad(playerSquadEntity: PlayerSquadEntity) : Completable
 
-    @Query("""
-        SELECT player.* FROM player
-         JOIN squadplayers ON player.entryid = squadplayers.player
-         JOIN squad ON squad.entryid = :squadEntryId
-         WHERE player.pos = :positionType
-        """)
-    fun getPlayersSquad(squadEntryId: String, positionType: PlayerPositionType): LiveData<List<PlayerEntity>>
+    @Update
+    fun updatePlayerSquad(playerSquadEntity: PlayerSquadEntity) : Completable
+
+    @Delete
+    fun deletePlayerSquad(playerSquadEntity: PlayerSquadEntity) : Completable
+
+    @Query("SELECT * FROM player WHERE pos == :playerPositionType ORDER BY name ASC")
+    fun getPlayersByPosition(playerPositionType: PlayerPositionType): Single<List<PlayerEntity>>
 
 }

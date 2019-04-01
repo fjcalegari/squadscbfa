@@ -45,7 +45,7 @@ class LocalDbConverter {
 
         @TypeConverter @JvmStatic
         fun toPlayerPositionFormationType(value: Int): PlayerPositionFormationType {
-            return PlayerPositionFormationType.getPlayerPositionFormationType(value)
+            return PlayerPositionFormationType.getPlayerPositionFormationType(value) ?: PlayerPositionFormationType.GOLEIRO
         }
 
         @TypeConverter @JvmStatic

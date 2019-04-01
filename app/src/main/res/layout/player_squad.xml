@@ -7,17 +7,9 @@
 
     <data>
 
-        <import type="com.calestu.squadscbfa.data.model.PlayerSquadModel" />
-
-        <import type="com.calestu.squadscbfa.data.model.PlayerModel" />
-
         <variable
                 name="playersquadmodel"
-                type="PlayerSquadModel" />
-
-        <variable
-                name="playermodel"
-                type="PlayerModel" />
+                type="com.calestu.squadscbfa.ui.module.squad.edit.model.SquadPlayerPositionEditModelView" />
 
         <variable
                 name="callback"
@@ -35,8 +27,8 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{playersquadmodel.labelPos}"
                 tools:text="POS"
+                android:text="@{playersquadmodel.playerPosition.tag}"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

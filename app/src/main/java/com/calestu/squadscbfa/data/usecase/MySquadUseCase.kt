@@ -7,7 +7,6 @@ import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.calestu.squadscbfa.data.executor.BaseSchedulerProvider
 import com.calestu.squadscbfa.data.repository.CoachRepository
-import com.calestu.squadscbfa.data.repository.CurrentSquadRepository
 import com.calestu.squadscbfa.data.repository.PlayerRepository
 import com.calestu.squadscbfa.data.repository.SquadRepository
 import com.calestu.squadscbfa.data.source.DataManager
@@ -21,7 +20,6 @@ class MySquadUseCase @Inject constructor(
     private val squadRepository: SquadRepository,
     private val playerRepository: PlayerRepository,
     private val coachRepository: CoachRepository,
-    private val currentSquadRepository: CurrentSquadRepository,
     private val schedulerProvider: BaseSchedulerProvider
 ) {
 

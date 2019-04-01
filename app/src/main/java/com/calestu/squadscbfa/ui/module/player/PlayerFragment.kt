@@ -4,17 +4,14 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.calestu.squadscbfa.R
 import com.calestu.squadscbfa.databinding.FragmentPlayersBinding
-import com.calestu.squadscbfa.ui.base.ItemClickListener
 import com.calestu.squadscbfa.ui.base.Status
 import com.calestu.squadscbfa.ui.base.fragment.BaseViewModelFragment
 import com.calestu.squadscbfa.ui.module.player.adapter.PlayersPagerAdapter
-import com.calestu.squadscbfa.ui.module.player.model.PlayerItemModelView
 import com.calestu.squadscbfa.util.ext.watch
-import timber.log.Timber
 
 class PlayerFragment : BaseViewModelFragment<FragmentPlayersBinding, PlayerViewModel>() {
 
-    private val playersPagerAdapter = PlayersPagerAdapter(itemClickListener, dataBindingComponent)
+    private lateinit var playersPagerAdapter : PlayersPagerAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -22,6 +19,8 @@ class PlayerFragment : BaseViewModelFragment<FragmentPlayersBinding, PlayerViewM
         with(binding) {
             viewmodel = viewModel
         }
+
+        playersPagerAdapter = PlayersPagerAdapter(viewModel, dataBindingComponent)
 
         with(binding.rvPlayers) {
             layoutManager = LinearLayoutManager(context)
@@ -37,13 +36,6 @@ class PlayerFragment : BaseViewModelFragment<FragmentPlayersBinding, PlayerViewM
         }
 
     }
-
-    private val itemClickListener: ItemClickListener<PlayerItemModelView>
-        get() = object : ItemClickListener<PlayerItemModelView> {
-            override fun onItemClick(v: View, item: PlayerItemModelView) {
-                viewModel.clickedPlayer(item)
-            }
-        }
 
     override fun getViewModelClass(): Class<PlayerViewModel> = PlayerViewModel::class.java
     override fun getLayout(): Int = R.layout.fragment_players

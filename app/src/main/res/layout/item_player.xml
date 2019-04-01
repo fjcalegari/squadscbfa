@@ -14,6 +14,7 @@
                 name="player"
                 type="com.calestu.squadscbfa.ui.module.player.model.PlayerItemModelView" />
 
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -38,9 +39,9 @@
                     style="@style/TextAppearance.MaterialComponents.Body1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{player.position.tag}"
                     android:layout_marginStart="@dimen/spacingTiny"
                     android:maxLines="1"
-                    android:text="@{player.pos.tag}"
                     android:textColor="@color/gray_dark"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -74,12 +75,28 @@
                     tools:text="@tools:sample/lorem" />
             
             <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSelected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+                    app:icon="@drawable/ic_arrow_unselected"
+                    app:iconGravity="textStart"
+                    app:isVisible="@{player.showSelected}"
+                    tools:visibility="gone"
+                    android:layout_marginEnd="@dimen/spacingSmall"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnNotSelected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                     app:icon="@drawable/ic_arrow_selected"
                     app:iconGravity="textStart"
-                    app:isGone="@{player.inSquad}"
+                    app:isVisible="@{player.showNotSelected}"
                     tools:visibility="visible"
                     android:layout_marginEnd="@dimen/spacingSmall"
                     app:layout_constraintTop_toTopOf="parent"
@@ -88,12 +105,12 @@
                     />
 
             <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDisable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
-                    app:icon="@drawable/ic_arrow_unselected"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     app:iconGravity="textStart"
-                    app:isGone="@{!player.inSquad}"
+                    app:isVisible="@{player.showDisable}"
                     tools:visibility="gone"
                     android:layout_marginEnd="@dimen/spacingSmall"
                     app:layout_constraintTop_toTopOf="parent"

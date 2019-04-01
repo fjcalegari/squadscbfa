@@ -38,9 +38,4 @@ class RepositoryModule {
         return CoachRepositoryImpl(localSource,remoteSource)
     }
 
-    @Provides
-    fun provideCurrentSquadRepository(localSource: LocalSource): CurrentSquadRepository {
-        return CurrentSquadRepositoryImpl(localSource)
-    }
-
 }

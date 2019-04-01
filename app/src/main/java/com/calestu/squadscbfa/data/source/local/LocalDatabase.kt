@@ -11,7 +11,6 @@ import com.calestu.squadscbfa.data.entity.*
     AppVersionEntity::class,
     CoachEntity::class,
     PlayerEntity::class,
-    CurrentSquadEntity::class,
     SquadEntity::class,
     PlayerSquadEntity::class
 ], version = 1, exportSchema = false)

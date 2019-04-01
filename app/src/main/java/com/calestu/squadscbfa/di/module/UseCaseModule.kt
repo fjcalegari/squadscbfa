@@ -1,9 +1,15 @@
 package com.calestu.squadscbfa.di.module
 
 import com.calestu.squadscbfa.data.executor.BaseSchedulerProvider
-import com.calestu.squadscbfa.data.repository.*
+import com.calestu.squadscbfa.data.repository.AppVersionRepository
+import com.calestu.squadscbfa.data.repository.CoachRepository
+import com.calestu.squadscbfa.data.repository.PlayerRepository
+import com.calestu.squadscbfa.data.repository.SquadRepository
 import com.calestu.squadscbfa.data.source.DataManager
-import com.calestu.squadscbfa.data.usecase.*
+import com.calestu.squadscbfa.data.usecase.MySquadUseCase
+import com.calestu.squadscbfa.data.usecase.SquadEditUseCase
+import com.calestu.squadscbfa.data.usecase.PlayerUseCase
+import com.calestu.squadscbfa.data.usecase.SyncUseCase
 import dagger.Module
 import dagger.Provides
 
@@ -32,14 +38,12 @@ class UseCaseModule {
         squadRepository: SquadRepository,
         playerRepository: PlayerRepository,
         coachRepository: CoachRepository,
-        currentSquadRepository: CurrentSquadRepository,
         schedulerProvider: BaseSchedulerProvider): MySquadUseCase {
         return MySquadUseCase(
             appDataManager,
             squadRepository,
             playerRepository,
             coachRepository,
-            currentSquadRepository,
             schedulerProvider
         )
     }
@@ -50,48 +54,26 @@ class UseCaseModule {
         squadRepository: SquadRepository,
         playerRepository: PlayerRepository,
         coachRepository: CoachRepository,
-        currentSquadRepository: CurrentSquadRepository,
         schedulerProvider: BaseSchedulerProvider): SquadEditUseCase {
         return SquadEditUseCase(
             appDataManager,
             squadRepository,
             playerRepository,
             coachRepository,
-            currentSquadRepository,
             schedulerProvider
         )
     }
 
     @Provides
-    fun provideSquadAddUseCase(
+    fun providePlayerUseCase(
         appDataManager: DataManager,
-        playerRepository: PlayerRepository,
-        coachRepository: CoachRepository,
-        currentSquadRepository: CurrentSquadRepository,
-        schedulerProvider: BaseSchedulerProvider): SquadAddUseCase {
-        return SquadAddUseCase(
-            appDataManager,
-            playerRepository,
-            coachRepository,
-            currentSquadRepository,
-            schedulerProvider
-        )
-    }
-
-    @Provides
-    fun provideSquadPlayerUseCase(
-        appDataManager: DataManager,
-        playerRepository: PlayerRepository,
         squadRepository: SquadRepository,
-        coachRepository: CoachRepository,
-        currentSquadRepository: CurrentSquadRepository,
-        schedulerProvider: BaseSchedulerProvider): SquadPlayerUseCase {
-        return SquadPlayerUseCase(
+        playerRepository: PlayerRepository,
+        schedulerProvider: BaseSchedulerProvider): PlayerUseCase {
+        return PlayerUseCase(
             appDataManager,
-            playerRepository,
             squadRepository,
-            coachRepository,
-            currentSquadRepository,
+            playerRepository,
             schedulerProvider
         )
     }

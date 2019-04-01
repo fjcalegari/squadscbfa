@@ -3,19 +3,13 @@ package com.calestu.squadscbfa.ui.module.formation
 import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.calestu.squadscbfa.data.entity.CurrentSquadEntity
 import com.calestu.squadscbfa.data.model.type.FormationType
-import com.calestu.squadscbfa.data.repository.CurrentSquadRepository
 import com.calestu.squadscbfa.ui.base.viewmodel.BaseViewModel
 import com.calestu.squadscbfa.util.SingleLiveEvent
-import io.reactivex.Single
-import io.reactivex.rxkotlin.addTo
-import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
 class FormationViewModel @Inject constructor(
-    private val currentSquadRepository: CurrentSquadRepository
 ) : BaseViewModel() {
 
     val selectedFormationConfirmed: SingleLiveEvent<Boolean> = SingleLiveEvent()
@@ -32,17 +26,17 @@ class FormationViewModel @Inject constructor(
     fun formationSelected(formationType: FormationType) {
         Timber.d("formationSelected: $formationType")
 
-        currentSquadRepository.getLocalCurrentSquad().
-            map { t ->  t.copy(formation = formationType)}
-            .flatMap {
-                currentSquadRepository.updateCurrentSquad(it).subscribeOn(Schedulers.io()).subscribe().addTo(compositeDisposable)
-                Single.just(it)
-            }
-            .subscribeOn(Schedulers.io())
-            .subscribe()
-            .addTo(compositeDisposable)
-
-        selectedFormationConfirmed.postValue(true)
+//        currentSquadRepository.getLocalCurrentSquad().
+//            map { t ->  t.copy(formation = formationType)}
+//            .flatMap {
+//                currentSquadRepository.updateCurrentSquad(it).subscribeOn(Schedulers.io()).subscribe().addTo(compositeDisposable)
+//                Single.just(it)
+//            }
+//            .subscribeOn(Schedulers.io())
+//            .subscribe()
+//            .addTo(compositeDisposable)
+//
+//        selectedFormationConfirmed.postValue(true)
     }
 
     override fun onFirsTimeUiCreate(bundle: Bundle?) {

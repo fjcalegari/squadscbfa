@@ -7,7 +7,6 @@ import com.calestu.squadscbfa.ui.module.formation.FormationViewModel
 import com.calestu.squadscbfa.ui.module.home.HomeViewModel
 import com.calestu.squadscbfa.ui.module.mysquad.MySquadViewModel
 import com.calestu.squadscbfa.ui.module.player.PlayerViewModel
-import com.calestu.squadscbfa.ui.module.squad.add.SquadAddViewModel
 import com.calestu.squadscbfa.ui.module.squad.edit.SquadEditViewModel
 import dagger.Binds
 import dagger.Module
@@ -35,11 +34,6 @@ abstract class ViewModelBuilder {
     @IntoMap
     @ViewModelKey(SquadEditViewModel::class)
     abstract fun bindSquadEditViewModel(viewModel: SquadEditViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(SquadAddViewModel::class)
-    abstract fun bindSquadAddViewModel(viewModel: SquadAddViewModel): ViewModel
 
     @Binds
     @IntoMap

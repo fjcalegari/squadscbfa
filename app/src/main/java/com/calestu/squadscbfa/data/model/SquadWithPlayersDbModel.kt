@@ -5,7 +5,7 @@ import androidx.room.Relation
 import com.calestu.squadscbfa.data.entity.PlayerSquadEntity
 import com.calestu.squadscbfa.data.entity.SquadEntity
 
-class SquadAllPlayers {
+class SquadWithPlayersDbModel {
 
     @Embedded
     lateinit var squad: SquadEntity
